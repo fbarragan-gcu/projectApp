@@ -40,10 +40,13 @@ export default function TopNav({ companyName }: Props) {
                 <a>Customers</a>
                 <ul className="p-2">
                   <li>
-                  <Link href={"/customers/new"}>New</Link>
+                    <Link href={"/customers/new"}>New</Link>
                   </li>
                   <li>
-                    <a>Search</a>
+                    <Link href={"/customers/search"}>Search</Link>
+                  </li>
+                  <li>
+                    <Link href={"/customers/allcustomers"}>All Customers</Link>
                   </li>
                 </ul>
               </li>
@@ -85,7 +88,10 @@ export default function TopNav({ companyName }: Props) {
                     <Link href={"/customers/new"}>New</Link>
                   </li>
                   <li>
-                    <a>Search</a>
+                    <Link href={"/customers/search"}>Search</Link>
+                  </li>
+                  <li>
+                    <Link href={"/customers/allcustomers"}>All Customers</Link>
                   </li>
                 </ul>
               </details>
@@ -138,7 +144,10 @@ export default function TopNav({ companyName }: Props) {
               className="btn btn-ghost btn-circle avatar bg-white"
             >
               <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src="/images/profile.png" />
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="/images/profile.png"
+                />
               </div>
             </div>
             <ul
