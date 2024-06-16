@@ -1,7 +1,7 @@
 export default function Search() {
   return (
     <>
-      <p>Search Customers</p>
+      <p>Search Projects</p>
     </>
   );
 }

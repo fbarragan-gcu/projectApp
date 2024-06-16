@@ -54,10 +54,13 @@ export default function TopNav({ companyName }: Props) {
                 <a>Projects</a>
                 <ul className="p-2">
                   <li>
-                    <a>New</a>
+                    <Link href={"/projects/new"}>New</Link>
                   </li>
                   <li>
-                    <a>Search</a>
+                    <Link href={"/projects/search"}>Search</Link>
+                  </li>
+                  <li>
+                    <Link href={"/projects/allprojects"}>All Projects</Link>
                   </li>
                 </ul>
               </li>
@@ -65,15 +68,18 @@ export default function TopNav({ companyName }: Props) {
                 <a>Admins</a>
                 <ul className="p-2">
                   <li>
-                    <a>New</a>
+                    <Link href={"/admins/new"}>New</Link>
                   </li>
                   <li>
-                    <a>Search</a>
+                    <Link href={"/admins/search"}>Search</Link>
+                  </li>
+                  <li>
+                    <Link href={"/admins/alladmins"}>All Admins</Link>
                   </li>
                 </ul>
               </li>
               <li>
-                <a>About</a>
+                <Link href={"/about"}>About</Link>
               </li>
             </ul>
           </div>
@@ -101,10 +107,13 @@ export default function TopNav({ companyName }: Props) {
                 <summary>Projects</summary>
                 <ul className="p-2">
                   <li>
-                    <a>New</a>
+                    <Link href={"/projects/new"}>New</Link>
                   </li>
                   <li>
-                    <a>Search</a>
+                    <Link href={"/projects/search"}>Search</Link>
+                  </li>
+                  <li>
+                    <Link href={"/projects/allprojects"}>All Projects</Link>
                   </li>
                 </ul>
               </details>
@@ -114,16 +123,19 @@ export default function TopNav({ companyName }: Props) {
                 <summary>Admins</summary>
                 <ul className="p-2">
                   <li>
-                    <a>New</a>
+                    <Link href={"/admins/new"}>New</Link>
                   </li>
                   <li>
-                    <a>Search</a>
+                    <Link href={"/admins/search"}>Search</Link>
+                  </li>
+                  <li>
+                    <Link href={"/admins/alladmins"}>All Admins</Link>
                   </li>
                 </ul>
               </details>
             </li>
             <li>
-              <a>About</a>
+              <Link href={"/about"}>About</Link>
             </li>
           </ul>
         </div>

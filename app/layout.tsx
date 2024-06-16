@@ -4,7 +4,6 @@ import "./globals.css";
 import Footer from "./ui/footer/page";
 import TopNav from "./ui/topnav/page";
 
-
 // const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,6 +16,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Update Company Here
   const companyName = "ProjectApp";
   return (
     <html lang="en">
