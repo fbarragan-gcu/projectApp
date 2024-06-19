@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 interface Props {
-  companyName: string;
+  companyName?: string;
 }
 
-export default function TopNav({ companyName }: Props) {
+export default function TopNav({ companyName = "ProjectApp" }: Props) {
   return (
     <nav className="text-white">
       <div className="navbar bg-base-100">
