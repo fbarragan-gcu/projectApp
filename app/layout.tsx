@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "./ui/footer/page";
-import TopNav from "./ui/topnav/page";
 import PrelineScript from "./PrelineScript";
 import NavBar from "./ui/navbar/page";
 
@@ -23,8 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col">
-        {/* <TopNav companyName={companyName} /> */}
-        <NavBar />
+        <NavBar companyName={companyName} />
         <main className="min-h-screen md:container mx-auto p-5">
           {children}
         </main>
