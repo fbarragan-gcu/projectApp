@@ -22,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex min-h-screen flex-col">
         <TopNav companyName={companyName} />
-        <main className="flex-grow flex p-5">{children}</main>
+        <main className="min-h-screen md:container mx-auto p-5">
+          {children}
+        </main>
         <Footer companyName={companyName} />
       </body>
     </html>
