@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* body {
   background: white;
   color: black;
-}
+} */
 
 @layer utilities {
   .text-balance {

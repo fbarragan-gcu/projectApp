@@ -6,31 +6,62 @@ export default async function AllCustomers() {
   return (
     <>
       <p>All Customers</p>
-      {/* TailwindCSS table with map */}
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead className="text-black">
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allCustomers.map((customer) => (
-              <tr key={customer.customer_id}>
-                <th>{customer.customer_id}</th>
-                <td>
-                  {customer.first_name} {customer.last_name}
-                </td>
-                <td>{customer.phone_number}</td>
-                <td>{customer.email_address}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="flex flex-col">
+        <div className="-m-1.5 overflow-x-auto">
+          <div className="p-1.5 min-w-full inline-block align-middle">
+            <div className="overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                    ></th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                    >
+                      Phone
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
+                    >
+                      Email
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
+                  {allCustomers.map((customer) => (
+                    <tr
+                      className="hover:bg-gray-100 dark:hover:bg-neutral-700"
+                      key={customer.customer_id}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                        {customer.customer_id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {customer.first_name} {customer.last_name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {customer.phone_number}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                        {customer.email_address}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
