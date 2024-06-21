@@ -1,0 +1,148 @@
+import { getCustomerById, getProjectsByCustomerId } from "@/app/lib/data";
+import Link from "next/link";
+
+export default async function DisplayCustomer({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  console.log(params);
+  const customer = await getCustomerById(params.slug);
+  const projects = await getProjectsByCustomerId(params.slug);
+  console.log(customer);
+  console.log(projects);
+  return (
+    <>
+      <h2>Customer Info {params.slug}</h2>
+      <h3>
+        {customer?.first_name} {customer?.last_name}
+      </h3>
+
+      {/* Customer Info */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="col-span-2 ...">
+          Customer: {customer?.first_name} {customer?.last_name}
+        </div>
+        <div className="..">Email: {customer?.email_address}</div>
+        <div className="..">Phone Number: {customer?.phone_number}</div>
+        <div className="col-span-2 ..">Projects:# {projects?.length}</div>
+      </div>
+
+      {/* Project Info */}
+      <div className="hs-accordion-group">
+        {projects?.map((projectInfo) => (
+          <div
+            // active Opens Accordian
+            // className="hs-accordion active"
+            className="hs-accordion"
+            id={`hs-basic-with-title-and-arrow-stretched-heading-${projectInfo.project_id}`}
+            key={projectInfo.project_id}
+          >
+            <button
+              className="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400"
+              aria-controls={`hs-basic-with-title-and-arrow-stretched-collapse-${projectInfo.project_id}`}
+            >
+              {projectInfo.scope_of_work}
+              <svg
+                className="hs-accordion-active:hidden block size-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+              <svg
+                className="hs-accordion-active:block hidden size-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m18 15-6-6-6 6"></path>
+              </svg>
+            </button>
+            <div
+              id={`hs-basic-with-title-and-arrow-stretched-collapse-${projectInfo.project_id}`}
+              // className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
+              // Hidden closes Accordian
+              className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+              aria-labelledby={`hs-basic-with-title-and-arrow-stretched-heading-${projectInfo.project_id}`}
+            >
+              <p className="text-gray-800 dark:text-neutral-200">
+                {projectInfo.special_request}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center items-center">
+        <Link href="../allcustomers" className="text-center">
+          Back to all customers
+        </Link>
+      </div>
+
+      {/* <div
+        class="hs-accordion"
+        id="hs-basic-with-title-and-arrow-stretched-heading-two"
+      >
+        <button
+          class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400"
+          aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two"
+        >
+          Accordion #2
+          <svg
+            class="hs-accordion-active:hidden block size-4"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+          <svg
+            class="hs-accordion-active:block hidden size-4"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m18 15-6-6-6 6"></path>
+          </svg>
+        </button>
+        <div
+          id="hs-basic-with-title-and-arrow-stretched-collapse-two"
+          class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+          aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two"
+        >
+          <p class="text-gray-800 dark:text-neutral-200">
+            <em>This is the third item's accordion body.</em> It is hidden by
+            default, until the collapse plugin adds the appropriate classes that
+            we use to style each element. These classes control the overall
+            appearance, as well as the showing and hiding via CSS transitions.
+          </p>
+        </div>
+      </div> */}
+    </>
+  );
+}

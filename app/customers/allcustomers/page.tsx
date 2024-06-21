@@ -1,4 +1,5 @@
 import { fetchAllCustomers } from "@/app/lib/data";
+import Link from "next/link";
 
 export default async function AllCustomers() {
   const allCustomers = await fetchAllCustomers();
@@ -47,7 +48,9 @@ export default async function AllCustomers() {
                         {customer.customer_id}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {customer.first_name} {customer.last_name}
+                        <Link href={"displaycustomer/" + customer.customer_id}>
+                          {customer.first_name} {customer.last_name}
+                        </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                         {customer.phone_number}

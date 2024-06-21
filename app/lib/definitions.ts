@@ -9,6 +9,11 @@ export type Admin = {
     email: string;
 }
 
+// Customer Types
+export type CustomerID = {
+    customer_id: string
+}
+
 export type Customer = {
     customer_id: string;
     first_name: string;
@@ -30,6 +35,7 @@ export type Project = {
     state: string;
     zip_code: string;
     scope_of_work: string;
+    special_request: string;
     quoted_price: string;
 }
 
