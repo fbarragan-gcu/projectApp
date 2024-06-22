@@ -2,11 +2,11 @@
 
 export type Admin = {
     admin_id: string;
-    user_name: string;
-    password: string;
     first_name: string;
     last_name: string;
+    user_name: string;
     email: string;
+    password: string;
 }
 
 // Customer Types

@@ -1,10 +1,10 @@
-import { fetchAllProjects, fetchAllCustomers } from "@/app/lib/data";
+import { getAllProjects, getAllCustomers } from "@/app/lib/data";
 import { Project, Customer } from "@/app/lib/definitions";
 import Link from "next/link";
 
 export default async function AllProjects() {
-  const allProjects = await fetchAllProjects();
-  const allCustomers = await fetchAllCustomers();
+  const allProjects = await getAllProjects();
+  const allCustomers = await getAllCustomers();
 
   const createProfile = (allProjects: Project, allCustomers: Customer) => {
     if (allProjects.customer_id === allCustomers.customer_id) {

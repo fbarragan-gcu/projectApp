@@ -1,7 +1,7 @@
-import { fetchAllAdmins } from "@/app/lib/data";
+import { getAllAdmins } from "@/app/lib/data";
 
 export default async function AllAdmins() {
-  const allAdmins = await fetchAllAdmins();
+  const allAdmins = await getAllAdmins();
   console.log(allAdmins);
   return (
     <>

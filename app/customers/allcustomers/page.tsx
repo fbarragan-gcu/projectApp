@@ -1,8 +1,8 @@
-import { fetchAllCustomers } from "@/app/lib/data";
+import { getAllCustomers } from "@/app/lib/data";
 import Link from "next/link";
 
 export default async function AllCustomers() {
-  const allCustomers = await fetchAllCustomers();
+  const allCustomers = await getAllCustomers();
   console.log(allCustomers);
   return (
     <>
