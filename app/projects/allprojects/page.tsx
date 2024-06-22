@@ -75,7 +75,7 @@ export default async function AllProjects() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                           <Link
-                            href={`/DisplayCustomer/${project.customer_id}`}
+                            href={`../customers/displaycustomer/${project.customer_id}`}
                           >{`${project.first_name} ${project.last_name}`}</Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">

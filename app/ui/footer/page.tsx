@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface Props {
   companyName: string;
 }
@@ -7,7 +9,8 @@ export default function Footer({ companyName }: Props) {
   return (
     <footer className="flex justify-center items-center p-4 bg-gray-800 text-white w-full sticky bottom-0">
       <p>
-        Copyright &copy; {currentYear.getFullYear()} {companyName}
+        Copyright &copy; {currentYear.getFullYear()}{" "}
+        <Link href="/">{companyName}</Link>
       </p>
     </footer>
   );

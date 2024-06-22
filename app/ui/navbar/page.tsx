@@ -79,7 +79,7 @@ export default function NavBar({ companyName }: Props) {
                 <button
                   id="hs-mega-menu-basic-dr"
                   type="button"
-                  className="flex items-center w-full text-gray-600 hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
+                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
                 >
                   Customers
                   <svg
@@ -124,7 +124,7 @@ export default function NavBar({ companyName }: Props) {
                 <button
                   id="hs-mega-menu-basic-dr"
                   type="button"
-                  className="flex items-center w-full text-gray-600 hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
+                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
                 >
                   Projects
                   <svg
@@ -169,7 +169,7 @@ export default function NavBar({ companyName }: Props) {
                 <button
                   id="hs-mega-menu-basic-dr"
                   type="button"
-                  className="flex items-center w-full text-gray-600 hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
+                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
                 >
                   Admins
                   <svg
@@ -217,7 +217,7 @@ export default function NavBar({ companyName }: Props) {
       {/* TODO: FIX */}
       {/* <button
         type="button"
-        className="hs-dark-mode-active:hidden block hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
+        className="hs-dark-mode-active:hidden block hs-dark-mode group flex items-center text-white hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
         data-hs-theme-click-value="dark"
       >
         <svg
@@ -237,7 +237,7 @@ export default function NavBar({ companyName }: Props) {
       </button>
       <button
         type="button"
-        className="hs-dark-mode-active:block hidden hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
+        className="hs-dark-mode-active:block hidden hs-dark-mode group flex items-center text-white hover:text-blue-600 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
         data-hs-theme-click-value="light"
       >
         <svg

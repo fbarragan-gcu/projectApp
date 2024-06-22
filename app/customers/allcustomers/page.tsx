@@ -55,10 +55,14 @@ export default async function AllCustomers() {
                         </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {customer.phone_number}
+                        <Link href={`tel:${customer.phone_number}`}>
+                          {customer.phone_number}
+                        </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                        {customer.email_address}
+                        <Link href={`mailto:${customer.email_address}`}>
+                          {customer.email_address}
+                        </Link>
                       </td>
                     </tr>
                   ))}
