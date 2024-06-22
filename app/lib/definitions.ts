@@ -15,6 +15,7 @@ export type CustomerID = {
 }
 
 export type Customer = {
+    admin_id: string;
     customer_id: string;
     first_name: string;
     last_name: string;
@@ -29,6 +30,7 @@ export type Customer = {
 // TODO: Add all states
 export type Project = {
     project_id: string;
+    admin_id: string;
     customer_id: string;
     street_name: string;
     city: string;
