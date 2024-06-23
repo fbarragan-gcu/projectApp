@@ -1,11 +1,11 @@
 import { sql } from '@vercel/postgres';
-import { Customer,CustomerID, Project, Admin } from './definitions';
+import { Customer, Project, Admin } from './definitions';
 
 // Customer
 export async function getAllCustomers() {
     try {
         const result = await sql<Customer>`
-        SELECT admin_id, customer_id, first_name, last_name, street_name, state, zip_code, email_address, phone_number
+        SELECT customer_id, first_name, last_name, street_name, state, zip_code, email_address, phone_number
         FROM customer
         `;
         const customers = result.rows;
@@ -19,7 +19,7 @@ export async function getAllCustomers() {
 export async function getCustomerById(id:string): Promise<Customer | null> {
     try {
         const result = await sql<Customer> `
-        SELECT admin_id, customer_id, first_name, last_name, street_name, state, zip_code, email_address, phone_number
+        SELECT customer_id, first_name, last_name, street_name, state, zip_code, email_address, phone_number
         FROM customer
         WHERE customer_id = ${id};
         `
@@ -35,7 +35,7 @@ export async function getCustomerById(id:string): Promise<Customer | null> {
 export async function getAllProjects() {
     try {
         const result = await sql<Project>`
-        SELECT project_id, admin_id, customer_id, street_name, city, state, zip_code, scope_of_work, special_request,
+        SELECT project_id, customer_id, street_name, city, state, zip_code, scope_of_work, special_request,
         quoted_price, created_at
         FROM project
         `;

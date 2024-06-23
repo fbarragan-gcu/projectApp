@@ -1,5 +1,5 @@
-import { getAllAdmins } from '../../lib/data';
 import { NextRequest, NextResponse } from 'next/server';
+import { getAllAdmins } from '../../lib/data';
 
 export async function GET(request: NextRequest) {
 
@@ -8,6 +8,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(admins);
   } catch (err) {
     console.error('API Error: ', err);
-    return new Response(JSON.stringify({ error: 'Failed to fetch admin data' }), { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch admin data' }, { status: 500 });
   }
 }
