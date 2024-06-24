@@ -9,6 +9,7 @@ export type Admin = {
     password: string;
 }
 
+// TODO: Ad admin_id
 export type Customer = {
     customer_id: string;
     first_name: string;
@@ -22,6 +23,7 @@ export type Customer = {
 
 // Update State to use a string union state: 'ca' | 'az'
 // TODO: Add all states
+// TODO: Ad admin_id
 export type Project = {
     project_id: string;
     customer_id: string;
