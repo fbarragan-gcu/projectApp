@@ -9,9 +9,10 @@ export type Admin = {
     password: string;
 }
 
-// TODO: Ad admin_id
+// TODO: Add Address2 or street_name2
 export type Customer = {
     customer_id: string;
+    admin_id: string,
     first_name: string;
     last_name: string;
     street_name: string;

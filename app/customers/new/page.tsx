@@ -1,3 +1,6 @@
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Customer } from "@/app/lib/definitions";
+
 export default function New() {
   return (
     <>

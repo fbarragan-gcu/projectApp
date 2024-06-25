@@ -67,19 +67,19 @@ export default function NavBar({ companyName }: Props) {
             className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
           >
             <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-              <a
+              <Link
                 className="font-medium text-blue-500"
                 href="/"
                 aria-current="page"
               >
                 Home
-              </a>
+              </Link>
 
               <div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] ">
                 <button
                   id="hs-mega-menu-basic-dr"
                   type="button"
-                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
+                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
                 >
                   Customers
                   <svg
@@ -124,7 +124,7 @@ export default function NavBar({ companyName }: Props) {
                 <button
                   id="hs-mega-menu-basic-dr"
                   type="button"
-                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500 "
+                  className="flex items-center w-full text-white hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
                 >
                   Projects
                   <svg
@@ -209,6 +209,12 @@ export default function NavBar({ companyName }: Props) {
                   </Link>
                 </div>
               </div>
+              <Link
+                className="font-medium text-white hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                href="/about"
+              >
+                About
+              </Link>
             </div>
           </div>
         </nav>

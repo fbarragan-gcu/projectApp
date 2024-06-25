@@ -46,129 +46,139 @@ export default function New() {
           />
         </div>
 
-        <div className="w-full px-2">
-          <label className="block text-sm mb-2 dark:text-white">Password</label>
-          <div className="relative">
-            <input
-              id="hs-toggle-password"
-              type="password"
-              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-              placeholder="Enter password"
-              value="12345qwerty"
-            />
-            <button
-              type="button"
-              data-hs-toggle-password='{
-        "target": "#hs-toggle-password"
-      }'
-              className="absolute top-0 end-0 p-3.5 rounded-e-md"
+        <div className="w-full px-2" data-hs-toggle-password-group="">
+          <div className="w-full">
+            <label
+              htmlFor="hs-toggle-password-multi-toggle-np"
+              className="block text-sm mb-2 dark:text-white"
             >
-              <svg
-                className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              Password
+            </label>
+            <div className="relative">
+              <input
+                id="hs-toggle-password-multi-toggle-np"
+                type="password"
+                className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                placeholder="Enter new password"
+                value="12345qwerty"
+              />
+              <button
+                type="button"
+                data-hs-toggle-password='{
+          "target": ["#hs-toggle-password-multi-toggle", "#hs-toggle-password-multi-toggle-np"]
+        }'
+                className="absolute top-0 end-0 p-3.5 rounded-e-md"
               >
-                <path
-                  className="hs-password-active:hidden"
-                  d="M9.88 9.88a3 3 0 1 0 4.24 4.24"
-                ></path>
-                <path
-                  className="hs-password-active:hidden"
-                  d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
-                ></path>
-                <path
-                  className="hs-password-active:hidden"
-                  d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
-                ></path>
-                <line
-                  className="hs-password-active:hidden"
-                  x1="2"
-                  x2="22"
-                  y1="2"
-                  y2="22"
-                ></line>
-                <path
-                  className="hidden hs-password-active:block"
-                  d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
-                ></path>
-                <circle
-                  className="hidden hs-password-active:block"
-                  cx="12"
-                  cy="12"
-                  r="3"
-                ></circle>
-              </svg>
-            </button>
+                <svg
+                  className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    className="hs-password-active:hidden"
+                    d="M9.88 9.88a3 3 0 1 0 4.24 4.24"
+                  ></path>
+                  <path
+                    className="hs-password-active:hidden"
+                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
+                  ></path>
+                  <path
+                    className="hs-password-active:hidden"
+                    d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
+                  ></path>
+                  <line
+                    className="hs-password-active:hidden"
+                    x1="2"
+                    x2="22"
+                    y1="2"
+                    y2="22"
+                  ></line>
+                  <path
+                    className="hidden hs-password-active:block"
+                    d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+                  ></path>
+                  <circle
+                    className="hidden hs-password-active:block"
+                    cx="12"
+                    cy="12"
+                    r="3"
+                  ></circle>
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full px-2">
-          <label className="block text-sm mb-2 dark:text-white">
-            Verify Password
-          </label>
-          <div className="relative">
-            <input
-              id="hs-toggle-password-verify"
-              type="password"
-              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-              placeholder="Enter password"
-              value="12345qwerty"
-            />
-            <button
-              type="button"
-              data-hs-toggle-password='{
-        "target": "#hs-toggle-password-verify"
-      }'
-              className="absolute top-0 end-0 p-3.5 rounded-e-md"
+          <div className="w-full">
+            <label
+              htmlFor="hs-toggle-password-multi-toggle"
+              className="block text-sm mb-2 dark:text-white"
             >
-              <svg
-                className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+              Verify password
+            </label>
+            <div className="relative">
+              <input
+                id="hs-toggle-password-multi-toggle"
+                type="password"
+                className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                placeholder="Enter current password"
+                value="12345qwerty"
+              />
+              <button
+                type="button"
+                data-hs-toggle-password='{
+          "target": ["#hs-toggle-password-multi-toggle", "#hs-toggle-password-multi-toggle-np"]
+        }'
+                className="absolute top-0 end-0 p-3.5 rounded-e-md"
               >
-                <path
-                  className="hs-password-active:hidden"
-                  d="M9.88 9.88a3 3 0 1 0 4.24 4.24"
-                ></path>
-                <path
-                  className="hs-password-active:hidden"
-                  d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
-                ></path>
-                <path
-                  className="hs-password-active:hidden"
-                  d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
-                ></path>
-                <line
-                  className="hs-password-active:hidden"
-                  x1="2"
-                  x2="22"
-                  y1="2"
-                  y2="22"
-                ></line>
-                <path
-                  className="hidden hs-password-active:block"
-                  d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
-                ></path>
-                <circle
-                  className="hidden hs-password-active:block"
-                  cx="12"
-                  cy="12"
-                  r="3"
-                ></circle>
-              </svg>
-            </button>
+                <svg
+                  className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    className="hs-password-active:hidden"
+                    d="M9.88 9.88a3 3 0 1 0 4.24 4.24"
+                  ></path>
+                  <path
+                    className="hs-password-active:hidden"
+                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
+                  ></path>
+                  <path
+                    className="hs-password-active:hidden"
+                    d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
+                  ></path>
+                  <line
+                    className="hs-password-active:hidden"
+                    x1="2"
+                    x2="22"
+                    y1="2"
+                    y2="22"
+                  ></line>
+                  <path
+                    className="hidden hs-password-active:block"
+                    d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+                  ></path>
+                  <circle
+                    className="hidden hs-password-active:block"
+                    cx="12"
+                    cy="12"
+                    r="3"
+                  ></circle>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
         <div className="w-full px-2 pt-4 flex justify-center space-x-4">
