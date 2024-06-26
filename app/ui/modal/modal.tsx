@@ -1,17 +1,19 @@
+"use client";
+
 import { useState } from "react";
 
-type modalStatus = {
+type ModalStatus = {
   title: string;
   status: string;
 };
 
 interface Props {
-  modalStatus: modalStatus;
+  modalStatus: ModalStatus;
   handleButtonClick: () => void;
 }
 
 export default function Modal({ modalStatus, handleButtonClick }: Props) {
-  const [modalSettings, setModalSettings] = useState<modalStatus>(modalStatus);
+  const [modalSettings, setModalSettings] = useState<ModalStatus>(modalStatus);
 
   const handleModal = () => {
     setModalSettings({

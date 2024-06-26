@@ -2,7 +2,7 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Customer } from "@/app/lib/definitions";
-import Modal from "@/app/ui/modal/page";
+import Modal from "@/app/ui/modal/modal";
 import { HSOverlay } from "preline/preline";
 import { useState } from "react";
 
