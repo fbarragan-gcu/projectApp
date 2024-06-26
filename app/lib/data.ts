@@ -5,7 +5,7 @@ import { Customer, Project, Admin } from './definitions';
 export async function getAllCustomers() {
     try {
         const result = await sql<Customer>`
-        SELECT customer_id, first_name, last_name, street_name, state, zip_code, email_address, phone_number
+        SELECT customer_id, admin_id, first_name, last_name, address_one, address_two, state, zip_code, email_address, phone_number
         FROM customer
         `;
         const customers = result.rows;
@@ -19,7 +19,7 @@ export async function getAllCustomers() {
 export async function getCustomerById(id:string): Promise<Customer | null> {
     try {
         const result = await sql<Customer> `
-        SELECT customer_id, first_name, last_name, street_name, state, zip_code, email_address, phone_number
+        SELECT customer_id, admin_id, first_name, last_name, address_one, address_two, state, zip_code, email_address, phone_number
         FROM customer
         WHERE customer_id = ${id};
         `
@@ -35,8 +35,8 @@ export async function getCustomerById(id:string): Promise<Customer | null> {
 export async function getAllProjects() {
     try {
         const result = await sql<Project>`
-        SELECT project_id, customer_id, street_name, city, state, zip_code, scope_of_work, special_request,
-        quoted_price, created_at
+        SELECT project_id, customer_id, address_one, address_two, city, state, zip_code, scope_of_work, special_request,
+        quoted_price, image_id, created_at, modified_at
         FROM project
         `;
         const projects = result.rows;
@@ -50,8 +50,8 @@ export async function getAllProjects() {
 export async function getProjectById(id:string): Promise<Project | null> {
     try {
         const result = await sql<Project>`
-        SELECT project_id, customer_id, street_name, city, state, zip_code, scope_of_work, special_request,
-        quoted_price, created_at
+        SELECT project_id, customer_id, address_one, address_two, city, state, zip_code, scope_of_work, special_request,
+        quoted_price, image_id, created_at, modified_at
         FROM project
         WHERE project_id = ${id}
         `;
@@ -66,8 +66,8 @@ export async function getProjectById(id:string): Promise<Project | null> {
 export async function getProjectsByCustomerId(id:string): Promise<Project[] | null> {
     try{
         const result = await sql<Project>`
-        SELECT project_id, customer_id, street_name, city, state, zip_code, scope_of_work, special_request,
-        quoted_price, created_at
+        SELECT project_id, customer_id, address_one, address_two, city, state, zip_code, scope_of_work, special_request,
+        quoted_price, image_id, created_at, modified_at
         FROM project
         WHERE customer_id = ${id};
         `
