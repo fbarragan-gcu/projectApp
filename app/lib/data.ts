@@ -1,7 +1,9 @@
 import { sql } from '@vercel/postgres';
 import { Customer, Project, Admin } from './definitions';
 
-// Customer
+// Customer 
+
+// Get All Customers
 export async function getAllCustomers() {
     try {
         const result = await sql<Customer>`
@@ -16,6 +18,7 @@ export async function getAllCustomers() {
     }
 }
 
+// Get Customer by customer_id
 export async function getCustomerById(id:string): Promise<Customer | null> {
     try {
         const result = await sql<Customer> `
@@ -28,6 +31,31 @@ export async function getCustomerById(id:string): Promise<Customer | null> {
     } catch (err) {
         console.log("Database Error: ", err)
         throw new Error("Failed to fetch Customer by ID");
+    }
+}
+
+// Create New Customer
+export async function createCustomer(customer: Customer){
+    try{
+        const result = await sql<Customer>`
+        INSERT INTO customer(admin_id, first_name, last_name, address_one, address_two, city, state, zip_code, email_address, phone_number)
+            VALUES (
+                ${customer.admin_id},
+                ${customer.first_name},
+                ${customer.last_name},
+                ${customer.address_one},
+                ${customer.address_two || null},
+                ${customer.city},
+                ${customer.state},
+                ${customer.zip_code},
+                ${customer.email_address},
+                ${customer.phone_number}
+            ) RETURNING *;
+        `
+        return result.rows;
+    } catch (err) {
+        console.log('Database Error: ', err);
+        throw new Error("Failed to create new Customer record.");
     }
 }
 

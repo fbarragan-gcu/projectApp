@@ -7,7 +7,7 @@ import { HSOverlay } from "preline/preline";
 import { useState } from "react";
 
 export default function New() {
-  // State
+  // React State VARS
   const [modalStatus, setModalStatus] = useState({
     title: "",
     status: "",
@@ -41,7 +41,6 @@ export default function New() {
   const createCustomers = (data: Customer) => {
     // Handle Modal Click
     const modalBtn = document.getElementById("modalBtn");
-    console.log(modalBtn);
     try {
       setModalStatus({
         title: "Success",
@@ -49,6 +48,14 @@ export default function New() {
         // css: "btn btn-success mx-auto",
       });
 
+      // fetch method for POST
+      fetch("/api/customers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       modalBtn?.click();
       console.log("Customer Created:", data);
     } catch (error) {
@@ -82,12 +89,6 @@ export default function New() {
       }
     }
   };
-  // const openBtn = document.querySelector("#open-btn");
-
-  // openBtn?.addEventListener("click", () => {
-  //   HSOverlay.open("#modal");
-  //   console.log("Modal Click");
-  // });
 
   return (
     <>

@@ -1,8 +1,30 @@
 import { getAllCustomers } from "@/app/lib/data";
 import Link from "next/link";
+import { Customer } from "@/app/lib/definitions";
+
+// TODO: Clean up customer API call
+async function getData() {
+  // const res = await fetch("http://localhost:3000/api/customers", {
+  //   next: { revalidate: 60 }, // Revalidate every 60 seconds
+  // });
+  const res = await fetch("http://localhost:3000/api/customers", {
+    cache: "no-store",
+  });
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
 
 export default async function AllCustomers() {
-  const allCustomers = await getAllCustomers();
+  // const allCustomers = await getAllCustomers();
+  const allCustomers = await getData();
+
   console.log(allCustomers);
   return (
     <>
@@ -39,7 +61,7 @@ export default async function AllCustomers() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-                  {allCustomers.map((customer) => (
+                  {allCustomers.map((customer: Customer) => (
                     <tr
                       className="hover:bg-gray-100 dark:hover:bg-neutral-700"
                       key={customer.customer_id}
