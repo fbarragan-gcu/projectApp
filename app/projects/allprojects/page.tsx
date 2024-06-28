@@ -1,6 +1,43 @@
-import { getAllProjects, getAllCustomers } from "@/app/lib/data";
-import { Project, Customer } from "@/app/lib/definitions";
+import { Project, ProjectFull, Customer } from "@/app/lib/definitions";
 import Link from "next/link";
+
+// Get All Projects data via API call
+async function getAllProjects() {
+  // Call getAllProjects Via API fetch call
+  const res = await fetch(`${process.env.API_URL}/api/projects`, {
+    cache: "no-store",
+  });
+  // TODO: Test if revalidation is better every min
+  // const res = await fetch("http://localhost:3000/api/customers", {
+  //   next: { revalidate: 60 }, // Revalidate every 60 seconds
+  // });
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+// Get All Customer data via API call
+async function getAllCustomers() {
+  // Call getAllCustomers Via API fetch call
+  const res = await fetch(`${process.env.API_URL}/api/customers`, {
+    cache: "no-store",
+  });
+  // TODO: Test if revalidation is better every min
+  // const res = await fetch("http://localhost:3000/api/customers", {
+  //   next: { revalidate: 60 }, // Revalidate every 60 seconds
+  // });
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
 
 export default async function AllProjects() {
   const allProjects = await getAllProjects();
@@ -14,15 +51,15 @@ export default async function AllProjects() {
     return null;
   };
 
-  const profiles = allProjects.flatMap((project) =>
-    allCustomers.map((customer) => createProfile(project, customer))
+  const profiles = allProjects.flatMap((project: Project) =>
+    allCustomers.map((customer: Customer) => createProfile(project, customer))
   );
 
   // Remove null values (projects without matching customers)
-  const projectInfo = profiles.filter((profile) => profile !== null);
+  const projectInfo = profiles.filter(
+    (profile: ProjectFull) => profile !== null
+  );
 
-  console.log(allProjects);
-  console.log(projectInfo);
   return (
     <>
       <p>All Projects</p>
@@ -61,7 +98,7 @@ export default async function AllProjects() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-                  {projectInfo.map((project) =>
+                  {projectInfo.map((project: ProjectFull) =>
                     // Remove null values if any
                     project ? (
                       <tr

@@ -44,6 +44,27 @@ export type Project = {
     modified_at: string;
 }
 
+export type ProjectFull = {
+    project_id: string;
+    admin_id: string;
+    customer_id: string;
+    first_name: string;
+    last_name: string;
+    address_one: string;
+    address_two: string | null;
+    city: string;
+    state: string;
+    zip_code: string;
+    scope_of_work: string;
+    special_request: string;
+    quoted_price: string;
+    image_id:string | null;
+    created_at:string;
+    modified_at: string;
+    email_address: string;
+    phone_number: string;
+}
+
 // Project Image Type
 export type Project_images = {
     image_id: string;
