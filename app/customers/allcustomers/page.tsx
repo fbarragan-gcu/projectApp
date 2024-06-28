@@ -1,17 +1,16 @@
-import { getAllCustomers } from "@/app/lib/data";
 import Link from "next/link";
 import { Customer } from "@/app/lib/definitions";
 
-// TODO: Clean up customer API call
+// Get All Customer data via API call
 async function getData() {
+  // Call getAllCustomers Via API fetch call
+  const res = await fetch(`${process.env.API_URL}/api/customers`, {
+    cache: "no-store",
+  });
+  // TODO: Test if revalidation is better every min
   // const res = await fetch("http://localhost:3000/api/customers", {
   //   next: { revalidate: 60 }, // Revalidate every 60 seconds
   // });
-  const res = await fetch("http://localhost:3000/api/customers", {
-    cache: "no-store",
-  });
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -22,10 +21,9 @@ async function getData() {
 }
 
 export default async function AllCustomers() {
-  // const allCustomers = await getAllCustomers();
+  // Fetch data on page reload
   const allCustomers = await getData();
 
-  console.log(allCustomers);
   return (
     <>
       <p>All Customers</p>
@@ -61,6 +59,7 @@ export default async function AllCustomers() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
+                  {/* Map over contents of all customers from getAllCustomers API call */}
                   {allCustomers.map((customer: Customer) => (
                     <tr
                       className="hover:bg-gray-100 dark:hover:bg-neutral-700"

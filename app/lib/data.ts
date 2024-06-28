@@ -3,12 +3,13 @@ import { Customer, Project, Admin } from './definitions';
 
 // Customer 
 
-// Get All Customers
+// Get All Customers, Sort by customer_id
 export async function getAllCustomers() {
     try {
         const result = await sql<Customer>`
         SELECT customer_id, admin_id, first_name, last_name, address_one, address_two, state, zip_code, email_address, phone_number
         FROM customer
+        ORDER BY customer_id
         `;
         const customers = result.rows;
         return customers;
