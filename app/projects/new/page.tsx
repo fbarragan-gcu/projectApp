@@ -1,4 +1,123 @@
+"use client";
+import { Project, Customer } from "@/app/lib/definitions";
+import { useForm, SubmitHandler } from "react-hook-form";
+import Modal from "@/app/ui/modal/modal";
+import { HSOverlay } from "preline/preline";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+// Create New Project Page
 export default function New() {
+  // React State VARS
+  const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  // for redirect
+  const router = useRouter();
+
+  useEffect(() => {
+    // using NEXT_PUBLIC_API_URL since client side
+    async function fetchCustomers() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers`,
+          {
+            cache: "no-store",
+          }
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await res.json();
+        setAllCustomers(data);
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+      }
+    }
+
+    fetchCustomers();
+  }, []);
+
+  // React State VARS for Modal
+  const [modalStatus, setModalStatus] = useState({
+    title: "",
+    status: "",
+    css: "",
+  });
+  // react-hook-form VARS
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Project>();
+
+  // Handle Form Submit Button and Trigger Modal
+  const onSubmit: SubmitHandler<Project> = (data) => {
+    console.log(data);
+    // Modal and REST API call
+    createProject(data);
+  };
+
+  // This will reset the form values
+  const clearForm = () => {
+    reset();
+  };
+
+  // Create customer and trigger Modal Success/Error
+  const createProject = (data: Project) => {
+    const modalBtn = document.getElementById("modalBtn");
+    // Success Creating customer
+    try {
+      setModalStatus({
+        title: "Success",
+        status: `Project Created `,
+        css: "bg-teal-500",
+      });
+
+      // fetch method for POST
+      fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      modalBtn?.click();
+      console.log("Project Created:", data);
+    } catch (error) {
+      // API Errors
+      setModalStatus({
+        title: "Error",
+        status: "Error Creating Project",
+        css: "bg-red-500",
+      });
+
+      modalBtn?.click();
+      console.error("Error creating project:");
+    }
+  };
+
+  // Handle Modal Click
+  const handleButtonClick = () => {
+    // Project Success redirect to All Customers
+    if (modalStatus.title === "Success") {
+      console.log("OK 200...");
+      console.log("Redirecting...");
+      router.push("/projects/allprojects");
+    } else {
+      // Inform of error and prompt back to creation
+      console.log("Closing modal...");
+      const modalCloseBtn = document.querySelector(
+        "#hs-vertically-centered-modal"
+      ) as HTMLElement;
+      if (modalCloseBtn) {
+        modalCloseBtn.click();
+      } else {
+        console.log("No Modal Button found.");
+      }
+    }
+  };
+
   return (
     <>
       <p>Create a Project</p>
@@ -14,12 +133,26 @@ export default function New() {
             className="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
             id="customer-name"
             defaultValue=""
+            {...register("customer_id", {
+              valueAsNumber: true,
+              required: "Must Select A Customer for project.",
+            })}
           >
             <option value="" disabled hidden>
               Select Customer
             </option>
-            <option value="Customer Name HERE">Customer Name HERE</option>
+            {allCustomers.map((customer) => (
+              <option key={customer.customer_id} value={customer.customer_id}>
+                {`${customer.first_name} ${customer.last_name}`}
+              </option>
+            ))}
           </select>
+          {/* <!-- Display validation error message for address --> */}
+          <div>
+            {errors.customer_id && (
+              <span className="text-danger">{errors.customer_id.message}</span>
+            )}
+          </div>
         </div>
 
         <div className="w-full px-2">

@@ -7,8 +7,9 @@ import { HSOverlay } from "preline/preline";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+// Create New Customer Page
 export default function New() {
-  // React State VARS
+  // React State VARS for Modal
   const [modalStatus, setModalStatus] = useState({
     title: "",
     status: "",
