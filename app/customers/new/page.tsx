@@ -5,13 +5,17 @@ import { Customer } from "@/app/lib/definitions";
 import Modal from "@/app/ui/modal/modal";
 import { HSOverlay } from "preline/preline";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function New() {
   // React State VARS
   const [modalStatus, setModalStatus] = useState({
     title: "",
     status: "",
+    css: "",
   });
+  // for redirect
+  const router = useRouter();
   // react-hook-form VARS
   const {
     register,
@@ -20,32 +24,27 @@ export default function New() {
     formState: { errors },
   } = useForm<Customer>();
 
+  // Handle Form Submit Button and Trigger Modal
   const onSubmit: SubmitHandler<Customer> = (data) => {
     console.log(data);
-    // Add to State
-    // addNewCustomer(data);
     // Modal and REST API call
     createCustomers(data);
   };
 
-  // const createCustomers = (data: Customer) => {
-  //   console.log("Customer Created:", data);
-  // };
-
+  // This will reset the form values
   const clearForm = () => {
-    // This will reset the form values
     reset();
   };
 
-  // TODO: Fix Modal
+  // Create customer and trigger Modal Success/Error
   const createCustomers = (data: Customer) => {
-    // Handle Modal Click
     const modalBtn = document.getElementById("modalBtn");
+    // Success Creating customer
     try {
       setModalStatus({
         title: "Success",
-        status: "Customer Created",
-        // css: "btn btn-success mx-auto",
+        status: `Customer ${data.first_name} ${data.last_name} Created `,
+        css: "bg-teal-500",
       });
 
       // fetch method for POST
@@ -59,11 +58,11 @@ export default function New() {
       modalBtn?.click();
       console.log("Customer Created:", data);
     } catch (error) {
-      // TODO: Factor in API Errors
+      // API Errors
       setModalStatus({
         title: "Error",
         status: "Error Creating Customer",
-        // css: "btn btn-danger mx-auto",
+        css: "bg-red-500",
       });
 
       modalBtn?.click();
@@ -71,16 +70,18 @@ export default function New() {
     }
   };
 
+  // Handle Modal Click
   const handleButtonClick = () => {
-    console.log("Button Clicked");
-
+    // Customer Success redirect to All Customers
     if (modalStatus.title === "Success") {
       console.log("OK 200...");
       console.log("Redirecting...");
+      router.push("/customers/allcustomers");
     } else {
+      // Inform of error and prompt back to creation
       console.log("Closing modal...");
       const modalCloseBtn = document.querySelector(
-        "#hs-vertically-centered-modal .btn-close"
+        "#hs-vertically-centered-modal"
       ) as HTMLElement;
       if (modalCloseBtn) {
         modalCloseBtn.click();
@@ -399,6 +400,7 @@ export default function New() {
               Clear
             </button>
 
+            {/* Modal Component with Props passed in */}
             <Modal
               modalStatus={modalStatus}
               handleButtonClick={handleButtonClick}

@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 
+// Types to be passed as Object of Props
 type ModalStatus = {
   title: string;
   status: string;
+  css: string;
 };
 
 interface Props {
@@ -19,6 +21,7 @@ export default function Modal({ modalStatus, handleButtonClick }: Props) {
     setModalSettings({
       title: modalSettings.title,
       status: modalSettings.status,
+      css: modalSettings.css,
     });
   };
   return (
@@ -72,21 +75,15 @@ export default function Modal({ modalStatus, handleButtonClick }: Props) {
                 {modalStatus.status}
               </p>
             </div>
-            <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
+            {/* Modal Button is Centered, CSS is inserted via props */}
+            <div className="flex justify-center items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
               <button
                 type="button"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+                className={`py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 ${modalStatus.css} text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800`}
                 data-hs-overlay="#hs-vertically-centered-modal"
                 onClick={handleButtonClick}
               >
-                Close
-              </button>
-              <button
-                type="button"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                onClick={handleButtonClick}
-              >
-                Save changes
+                Ok
               </button>
             </div>
           </div>

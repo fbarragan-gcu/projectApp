@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getProjectById } from '../../../lib/data';
 
+// Get Project By Id
+// api/projects/:ProjectID
 export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }

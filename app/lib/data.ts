@@ -1,10 +1,10 @@
 import { sql } from '@vercel/postgres';
 import { Customer, Project, Admin } from './definitions';
 
-// Customer 
+/* Customer */
 
 // Get All Customers, Sort by customer_id
-export async function getAllCustomers() {
+export async function getAllCustomers(): Promise<Customer[]> {
     try {
         const result = await sql<Customer>`
         SELECT customer_id, admin_id, first_name, last_name, address_one, address_two, state, zip_code, email_address, phone_number
@@ -36,7 +36,7 @@ export async function getCustomerById(id:string): Promise<Customer | null> {
 }
 
 // Create New Customer
-export async function createCustomer(customer: Customer){
+export async function createCustomer(customer: Customer): Promise<Customer[]>{
     try{
         const result = await sql<Customer>`
         INSERT INTO customer(admin_id, first_name, last_name, address_one, address_two, city, state, zip_code, email_address, phone_number)
@@ -60,8 +60,8 @@ export async function createCustomer(customer: Customer){
     }
 }
 
-// Project
-export async function getAllProjects() {
+/* Project */
+export async function getAllProjects(): Promise<Project[]> {
     try {
         const result = await sql<Project>`
         SELECT project_id, customer_id, address_one, address_two, city, state, zip_code, scope_of_work, special_request,
@@ -108,8 +108,43 @@ export async function getProjectsByCustomerId(id:string): Promise<Project[] | nu
     }
 }
 
-// Admin
-export async function getAllAdmins() {
+// Get All Projects by Admin Id
+export async function getProjectsByAdminId(id:string): Promise<Project[] | null> {
+    try{
+        const result = await sql<Project>`
+            SELECT 
+                project.project_id, 
+                project.customer_id, 
+                project.address_one, 
+                project.address_two, 
+                project.city, 
+                project.state, 
+                project.zip_code, 
+                project.scope_of_work, 
+                project.special_request, 
+                project.quoted_price, 
+                project.image_id, 
+                project.created_at, 
+                project.modified_at
+            FROM 
+                project
+            INNER JOIN 
+                customer 
+            ON 
+                project.customer_id = customer.customer_id
+            WHERE 
+                customer.admin_id = ${id};
+        `
+        const projects = result.rows;
+        return projects || null;
+    } catch (err) {
+        console.log("Database Error: ", err);
+        throw new Error("Failed to fetch Projects by Admin id");
+    }
+}
+
+/* Admin */
+export async function getAllAdmins(): Promise<Admin[]> {
     try {
         const result = await sql<Admin>`
         SELECT admin_id, first_name, last_name, user_name, email

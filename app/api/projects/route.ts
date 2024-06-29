@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllProjects } from '../../lib/data';
 
+
+// Get All Projects
+// api/projects/
 export async function GET(request: NextRequest) {
 
   try {

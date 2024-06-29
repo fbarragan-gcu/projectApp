@@ -7,10 +7,6 @@ async function getAllProjects() {
   const res = await fetch(`${process.env.API_URL}/api/projects`, {
     cache: "no-store",
   });
-  // TODO: Test if revalidation is better every min
-  // const res = await fetch("http://localhost:3000/api/customers", {
-  //   next: { revalidate: 60 }, // Revalidate every 60 seconds
-  // });
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -26,10 +22,6 @@ async function getAllCustomers() {
   const res = await fetch(`${process.env.API_URL}/api/customers`, {
     cache: "no-store",
   });
-  // TODO: Test if revalidation is better every min
-  // const res = await fetch("http://localhost:3000/api/customers", {
-  //   next: { revalidate: 60 }, // Revalidate every 60 seconds
-  // });
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

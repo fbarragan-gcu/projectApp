@@ -17,7 +17,7 @@ export type Customer = {
     first_name: string;
     last_name: string;
     address_one: string;
-    address_two?: string;
+    address_two: string | null;
     city: string;
     state: string;
     zip_code: string;
@@ -32,7 +32,7 @@ export type Project = {
     project_id: string;
     customer_id: string;
     address_one: string;
-    address_two: string;
+    address_two: string | null;
     city: string;
     state: string;
     zip_code: string;
@@ -44,6 +44,7 @@ export type Project = {
     modified_at: string;
 }
 
+// Project and Customer info combined
 export type ProjectFull = {
     project_id: string;
     admin_id: string;

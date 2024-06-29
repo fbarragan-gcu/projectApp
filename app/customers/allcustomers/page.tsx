@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Customer } from "@/app/lib/definitions";
 
 // Get All Customer data via API call
-async function getData() {
+async function getAllCustomers() {
   // Call getAllCustomers Via API fetch call
   const res = await fetch(`${process.env.API_URL}/api/customers`, {
     cache: "no-store",
@@ -22,7 +22,7 @@ async function getData() {
 
 export default async function AllCustomers() {
   // Fetch data on page reload
-  const allCustomers = await getData();
+  const allCustomers = await getAllCustomers();
 
   return (
     <>

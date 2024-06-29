@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllAdmins } from '../../lib/data';
 
+
+// Get All Admins
+// api/admins/
 export async function GET(request: NextRequest) {
 
   try {

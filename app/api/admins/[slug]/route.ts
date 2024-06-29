@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAdminById } from '../../../lib/data';
 
+// Get Admin By Id
+// api/admins/:adminID
 export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }
