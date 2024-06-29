@@ -75,13 +75,13 @@ export default function New() {
       });
 
       // fetch method for POST
-      fetch("/api/projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      // fetch("/api/projects", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // });
       modalBtn?.click();
       console.log("Project Created:", data);
     } catch (error) {
@@ -121,158 +121,257 @@ export default function New() {
   return (
     <>
       <p>Create a Project</p>
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2 px-2">
-          <label
-            htmlFor="customer-name"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            Customer
-          </label>
-          <select
-            className="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            id="customer-name"
-            defaultValue=""
-            {...register("customer_id", {
-              valueAsNumber: true,
-              required: "Must Select A Customer for project.",
-            })}
-          >
-            <option value="" disabled hidden>
-              Select Customer
-            </option>
-            {allCustomers.map((customer) => (
-              <option key={customer.customer_id} value={customer.customer_id}>
-                {`${customer.first_name} ${customer.last_name}`}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-wrap">
+          <div className="w-full md:w-1/2 px-2">
+            <label
+              htmlFor="customer-name"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              Customer
+            </label>
+            <select
+              className="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              id="customer-name"
+              defaultValue=""
+              {...register("customer_id", {
+                valueAsNumber: true,
+                required: "Must Select A Customer for project.",
+              })}
+            >
+              <option value="" disabled hidden>
+                Select Customer
               </option>
-            ))}
-          </select>
-          {/* <!-- Display validation error message for address --> */}
-          <div>
-            {errors.customer_id && (
-              <span className="text-danger">{errors.customer_id.message}</span>
-            )}
+              {allCustomers.map((customer) => (
+                <option key={customer.customer_id} value={customer.customer_id}>
+                  {`${customer.first_name} ${customer.last_name}`}
+                </option>
+              ))}
+            </select>
+            {/* <!-- Display validation error message for address --> */}
+            <div>
+              {errors.customer_id && (
+                <span className="text-red-600 text-sm">
+                  {errors.customer_id.message}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="w-full px-2">
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              placeholder="1234 Main St"
+              maxLength={50}
+              {...register("address_one", {
+                required: "Adress is required.",
+                minLength: {
+                  value: 10,
+                  message: "Address too short, minimum length is 10 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Too long, max length 50 characters",
+                },
+              })}
+            />
+            {/* <!-- Display validation error message for address --> */}
+            <div>
+              {errors.address_one && (
+                <span className="text-red-600 text-sm">
+                  {errors.address_one.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="w-full md:w-1/3 px-2">
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              City
+            </label>
+            <input
+              type="text"
+              id="city"
+              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              placeholder="Los Angeles"
+              {...register("city", {
+                required: "City is required.",
+                minLength: {
+                  value: 5,
+                  message: "City too short, minimum length is 5 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Too long, max length 50 characters",
+                },
+              })}
+            />
+            {/* <!-- Display validation error message for city --> */}
+            <div>
+              {errors.city && (
+                <span className="text-red-600 text-sm">
+                  {errors.city.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="w-full md:w-1/3 px-2">
+            <label
+              htmlFor="state"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              State
+            </label>
+            <select
+              className="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              id="inputState"
+              defaultValue="CA"
+              {...register("state", { required: true })}
+            >
+              <option>AZ</option>
+              <option>CA</option>
+            </select>
+            {/* <!-- Display validation error message for state --> */}
+            <div>
+              {errors.state && (
+                <span className="text-red-600 text-sm">State is required.</span>
+              )}
+            </div>
+          </div>
+          <div className="w-full md:w-1/3 px-2">
+            <label
+              htmlFor="zip"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              Zip
+            </label>
+            <input
+              type="text"
+              id="zip"
+              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              placeholder="91210"
+              {...register("zip_code", {
+                required: "Zip is required.",
+                minLength: {
+                  value: 5,
+                  message: "Zip Code too short, minimum length is 5 characters",
+                },
+                maxLength: {
+                  value: 10,
+                  message: "Too long, max length 10 characters",
+                },
+                pattern: {
+                  value: /^[0-9]*-?[0-9]*$/,
+                  message: "Invalid zip code format.",
+                },
+              })}
+            />
+            {/* <!-- Display validation error message for Zip --> */}
+            <div>
+              {errors.zip_code && (
+                <span className="text-red-600 text-sm">
+                  {errors.zip_code.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="w-full px-2">
+            <label
+              htmlFor="scope-of-work"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              Scope of Work
+            </label>
+            <textarea
+              id="scope-of-work"
+              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              rows={3}
+              placeholder="Work to be completed..."
+              {...register("scope_of_work", { required: true })}
+            ></textarea>
+            {/* <!-- Display validation error message for scope_of_work --> */}
+            <div>
+              {errors.scope_of_work && (
+                <span className="text-red-600 text-sm">
+                  Scope of Work is required.
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="w-full md:w-1/2 px-2">
+            <label
+              htmlFor="special-request"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              Special Requests
+            </label>
+            <textarea
+              id="special-request"
+              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              rows={3}
+              placeholder="Any customer special request items."
+              {...register("special_request")}
+            ></textarea>
+          </div>
+          <div className="w-full md:w-1/2 px-2">
+            <label
+              htmlFor="quoted-price"
+              className="block text-sm font-medium mb-2 dark:text-white"
+            >
+              Quoted Price
+            </label>
+            <input
+              type="text"
+              id="quoted-price"
+              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              placeholder="999.99"
+              {...register("quoted_price", {
+                required: true,
+                pattern: /^\d{1,10}(\.\d{2})?$/,
+              })}
+            />
+            {/* <!-- Display validation error message for quoted_price --> */}
+            <div>
+              {errors.quoted_price && (
+                <span className="text-red-600 text-sm">
+                  Quoted Price is required.
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="w-full px-2 pt-4 flex justify-center space-x-4">
+            <button
+              type="submit"
+              className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-teal-500 text-white hover:bg-teal-600 disabled:opacity-50 disabled:pointer-events-none"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none"
+              onClick={clearForm}
+            >
+              Clear
+            </button>
+
+            {/* Modal Component with Props passed in */}
+            <Modal
+              modalStatus={modalStatus}
+              handleButtonClick={handleButtonClick}
+            />
           </div>
         </div>
-
-        <div className="w-full px-2">
-          <label
-            htmlFor="address"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            Address
-          </label>
-          <input
-            type="text"
-            id="address"
-            className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            placeholder="1234 Main St."
-          />
-        </div>
-        <div className="w-full md:w-1/3 px-2">
-          <label
-            htmlFor="city"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            City
-          </label>
-          <input
-            type="text"
-            id="city"
-            className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            placeholder="Los Angeles"
-          />
-        </div>
-        <div className="w-full md:w-1/3 px-2">
-          <label
-            htmlFor="state"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            State
-          </label>
-          <select
-            className="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            id="inputState"
-            defaultValue=""
-          >
-            <option value="" disabled hidden>
-              Choose...
-            </option>
-            <option value="AZ">AZ</option>
-            <option value="CA">CA</option>
-          </select>
-        </div>
-        <div className="w-full md:w-1/3 px-2">
-          <label
-            htmlFor="zip"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            Zip
-          </label>
-          <input
-            type="text"
-            id="zip"
-            className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            placeholder="91210"
-          />
-        </div>
-        <div className="w-full px-2">
-          <label
-            htmlFor="scope-of-work"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            Scope of Work
-          </label>
-          <textarea
-            id="scope-of-work"
-            className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            rows={3}
-            placeholder="Work to be completed..."
-          ></textarea>
-        </div>
-        <div className="w-full md:w-1/2 px-2">
-          <label
-            htmlFor="special-request"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            Scope of Work
-          </label>
-          <textarea
-            id="special-request"
-            className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            rows={3}
-            placeholder="Any customer special request items."
-          ></textarea>
-        </div>
-        <div className="w-full md:w-1/2 px-2">
-          <label
-            htmlFor="quoted-price"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            Quoted Price
-          </label>
-          <input
-            type="text"
-            id="quoted-price"
-            className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-            placeholder="999.99"
-          />
-        </div>
-        <div className="w-full px-2 pt-4 flex justify-center space-x-4">
-          <button
-            type="button"
-            className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-teal-500 text-white hover:bg-teal-600 disabled:opacity-50 disabled:pointer-events-none"
-          >
-            Create
-          </button>
-          <button
-            type="button"
-            className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none"
-          >
-            Clear
-          </button>
-        </div>
-      </div>
+      </form>
     </>
   );
 }
