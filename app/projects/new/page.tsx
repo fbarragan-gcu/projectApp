@@ -75,13 +75,13 @@ export default function New() {
       });
 
       // fetch method for POST
-      // fetch("/api/projects", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // });
+      fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       modalBtn?.click();
       console.log("Project Created:", data);
     } catch (error) {

@@ -2,7 +2,8 @@ import { getAllAdmins } from "@/app/lib/data";
 
 export default async function AllAdmins() {
   const allAdmins = await getAllAdmins();
-  console.log(allAdmins);
+  // TODO: Make API
+  // console.log(allAdmins);
   return (
     <>
       <h2>All Admins</h2>

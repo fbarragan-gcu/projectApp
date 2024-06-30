@@ -143,6 +143,31 @@ export async function getProjectsByAdminId(id:string): Promise<Project[] | null>
     }
 }
 
+// Create New Project
+export async function createProject(project: Project): Promise<Project[]>{
+    try{
+        const result = await sql<Project>`
+        INSERT INTO project(customer_id, address_one, address_two, city, state, zip_code, scope_of_work, special_request, quoted_price, image_id)
+            VALUES (
+                ${project.customer_id},
+                ${project.address_one},
+                ${project.address_two || null},
+                ${project.city},
+                ${project.state},
+                ${project.zip_code},
+                ${project.scope_of_work},
+                ${project.special_request},
+                ${project.quoted_price},
+                ${project.image_id}
+            ) RETURNING *;
+        `
+        return result.rows;
+    } catch (err) {
+        console.log('Database Error: ', err);
+        throw new Error("Failed to create new Project record.");
+    }
+}
+
 /* Admin */
 export async function getAllAdmins(): Promise<Admin[]> {
     try {

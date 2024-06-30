@@ -1,28 +1,36 @@
+"use client";
 import Link from "next/link";
 import { Customer } from "@/app/lib/definitions";
+import { useEffect, useState } from "react";
 
-// Get All Customer data via API call
-async function getAllCustomers() {
-  // Call getAllCustomers Via API fetch call
-  const res = await fetch(`${process.env.API_URL}/api/customers`, {
-    cache: "no-store",
-  });
-  // TODO: Test if revalidation is better every min
-  // const res = await fetch("http://localhost:3000/api/customers", {
-  //   next: { revalidate: 60 }, // Revalidate every 60 seconds
-  // });
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-export default async function AllCustomers() {
+export default function AllCustomers() {
+  // React State VARS
+  const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  // Get All Customer data via API call
   // Fetch data on page reload
-  const allCustomers = await getAllCustomers();
+  useEffect(() => {
+    // using NEXT_PUBLIC_API_URL since client side
+    async function fetchCustomers() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers`,
+          {
+            cache: "no-store",
+          }
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await res.json();
+        setAllCustomers(data);
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+      }
+    }
+
+    fetchCustomers();
+  }, []);
 
   return (
     <>
