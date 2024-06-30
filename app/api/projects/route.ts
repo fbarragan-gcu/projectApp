@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST Method for New Project creation
-// api/project
+// api/projects/
 export async function POST(request: NextRequest) {
   
   try {
@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// POST Method for New Project creation
-// api/project
+// PUT Method for Project Edit
+// api/projects/
 export async function PUT(request: NextRequest) {
   
   try {

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCustomerById } from '../../../lib/data';
 
-
 // Get Customer By Id
 // api/customers/:customerID
 export async function GET(

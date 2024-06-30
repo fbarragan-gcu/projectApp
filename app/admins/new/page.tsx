@@ -1,3 +1,5 @@
+// New Admin Registration Page, Will introduce Supabase for OAuth, Google login methods.
+// Will remove need for passwords.
 export default function New() {
   return (
     <>

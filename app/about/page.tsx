@@ -1,3 +1,4 @@
+// About Page, Will have information about owner and company.
 export default function About() {
   return (
     <>

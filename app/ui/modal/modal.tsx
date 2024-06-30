@@ -14,6 +14,7 @@ interface Props {
   handleButtonClick: () => void;
 }
 
+// Modal Adapted from Preline UI, Might be scrapped due to issues triggering Modal.
 export default function Modal({ modalStatus, handleButtonClick }: Props) {
   const [modalSettings, setModalSettings] = useState<ModalStatus>(modalStatus);
 

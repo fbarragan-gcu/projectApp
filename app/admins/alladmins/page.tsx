@@ -1,9 +1,11 @@
 import { getAllAdmins } from "@/app/lib/data";
 
+// Page for All Admin Listing, will require login.
 export default async function AllAdmins() {
+  // TODO: Convert to API
+  // api/admins/
   const allAdmins = await getAllAdmins();
-  // TODO: Make API
-  // console.log(allAdmins);
+
   return (
     <>
       <h2>All Admins</h2>

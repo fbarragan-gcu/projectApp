@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Customer } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 
+// Page to Display All Customers and Information.
 export default function AllCustomers() {
   // React State VARS
   const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
