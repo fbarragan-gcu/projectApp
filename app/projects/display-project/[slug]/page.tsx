@@ -60,8 +60,18 @@ export default function DisplayProject({
 
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;
-  // Display Customer not found if error with Project ID
-  if (!project) return <div>Project not found</div>;
+  // Display Project not found if error with Project ID
+  if (!project)
+    return (
+      <div>
+        Project with ID: {params.slug} not found
+        <div className="flex justify-center items-center pt-4">
+          <Link href="../allprojects" className="text-center text-blue-500">
+            Back to all projects
+          </Link>
+        </div>
+      </div>
+    );
 
   return (
     <>
@@ -126,11 +136,8 @@ export default function DisplayProject({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="text-right">
-          <button
-            // href={`/EditProject/${project?.project_id}`}
-            className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
-          >
-            Edit
+          <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300">
+            <Link href={`../edit/${project.project_id}`}>Edit</Link>
           </button>
         </div>
         <div className="text-left">

@@ -93,7 +93,17 @@ export default function DisplayCustomer({
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;
   // Display Customer not found if error with Customer ID
-  if (!customerInfo) return <div>Customer not found</div>;
+  if (!customerInfo)
+    return (
+      <div>
+        Customer with ID:{params.slug} not found
+        <div className="flex justify-center items-center pt-4">
+          <Link href="../allcustomers" className="text-center text-blue-500">
+            Back to all customers
+          </Link>
+        </div>
+      </div>
+    );
 
   return (
     <>

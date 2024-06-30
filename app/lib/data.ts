@@ -61,6 +61,8 @@ export async function createCustomer(customer: Customer): Promise<Customer[]>{
 }
 
 /* Project */
+
+// Get All Projects
 export async function getAllProjects(): Promise<Project[]> {
     try {
         const result = await sql<Project>`
@@ -76,6 +78,7 @@ export async function getAllProjects(): Promise<Project[]> {
     }
 }
 
+// Get Single Project By ID
 export async function getProjectById(id:string): Promise<Project | null> {
     try {
         const result = await sql<Project>`
@@ -92,6 +95,7 @@ export async function getProjectById(id:string): Promise<Project | null> {
     }
 }
 
+// Get All Projects By Single Customer ID
 export async function getProjectsByCustomerId(id:string): Promise<Project[] | null> {
     try{
         const result = await sql<Project>`
@@ -167,6 +171,34 @@ export async function createProject(project: Project): Promise<Project[]>{
         throw new Error("Failed to create new Project record.");
     }
 }
+
+// Edit Project By Project ID
+export async function updateProject(project: Project): Promise<Project[]> {
+    try {
+        const result = await sql<Project>`
+            UPDATE project
+            SET
+                customer_id = ${project.customer_id},
+                address_one = ${project.address_one},
+                address_two = ${project.address_two || null},
+                city = ${project.city},
+                state = ${project.state},
+                zip_code = ${project.zip_code},
+                scope_of_work = ${project.scope_of_work},
+                special_request = ${project.special_request},
+                quoted_price = ${project.quoted_price},
+                image_id = ${project.image_id},
+                modified_at = CURRENT_TIMESTAMP
+            WHERE project_id = ${project.project_id}
+            RETURNING *;
+        `;
+        return result.rows;
+    } catch (err) {
+        console.log('Database Error: ', err);
+        throw new Error("Failed to update Project record.");
+    }
+}
+
 
 /* Admin */
 export async function getAllAdmins(): Promise<Admin[]> {
