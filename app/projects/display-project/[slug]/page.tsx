@@ -1,6 +1,9 @@
 "use client";
 import { Customer, Project } from "@/app/lib/definitions";
+import Modal from "@/app/ui/modal/modal1";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { HSOverlay } from "preline/preline";
 import { useEffect, useState } from "react";
 
 // Display Project by Id
@@ -13,11 +16,19 @@ export default function DisplayProject({
   const [customerInfo, setCustomerInfo] = useState<Customer | null>(null);
   const [project, setProjects] = useState<Project>();
   const [loading, setLoading] = useState(true);
+  // React State VARS for Modal
+  const [modalStatus, setModalStatus] = useState({
+    title: "",
+    status: "",
+    css: "",
+  });
 
+  // for redirect
+  const router = useRouter();
   // Pull Projects by Slug ID
   useEffect(() => {
     if (params.slug) {
-      const fetchProjectAndCustomer = async () => {
+      const getProjectAndCustomer = async () => {
         try {
           // Fetch project info first
           const projectRes = await fetch(
@@ -51,12 +62,85 @@ export default function DisplayProject({
         }
       };
 
-      fetchProjectAndCustomer();
+      getProjectAndCustomer();
     }
   }, [params.slug]);
 
   // Display project location on Google Maps
   const googleMapsLoc = `https://www.google.com/maps/search/?api=1&query=${project?.address_one}+${project?.city}+${project?.state}`;
+
+  // TODO: Include ProjectId
+  // TODO: Possible Double check
+  const handleDelete = () => {
+    // Handle Delete Modal
+    console.log(`ProjectId:${project?.project_id} Deleted.`);
+    deleteProject();
+  };
+
+  // TODO: Include ProjectId
+  const deleteProject = async () => {
+    const modalBtn = document.getElementById("modalBtn");
+    const projectId = project?.project_id;
+    try {
+      // Delete Project
+
+      if (!projectId) {
+        throw new Error("Project ID is undefined.");
+      }
+
+      const response = await fetch(`/api/projects/${projectId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete project with ID ${projectId}`);
+      }
+      // Update Modal for Successful delete
+      setModalStatus({
+        title: "Success",
+        status: "Project Deleted",
+        css: "bg-teal-500 hover:bg-teal-600",
+      });
+      modalBtn?.click();
+      console.log("Project Deleted");
+    } catch (error) {
+      console.error("Error deleting project");
+      setModalStatus({
+        title: "Error",
+        status: "Error Deleting Project",
+        css: "bg-red-500 hover:bg-red-600",
+      });
+
+      modalBtn?.click();
+      console.log("Error Deleting Project");
+    }
+  };
+
+  // TODO: Fix Delete, Ensure success/fail
+  // Handle Modal Click
+  const handleButtonClick = () => {
+    // Customer Success redirect to All Customers
+    if (modalStatus.title === "Success") {
+      console.log("OK 200...");
+      console.log("Redirecting...");
+      router.push("../allprojects");
+    } else {
+      // Inform of error and prompt back to creation
+      console.log("Closing modal...");
+      router.push("../allprojects");
+      const modalCloseBtn = document.getElementById("closeBtn") as HTMLElement;
+      if (modalCloseBtn) {
+        modalCloseBtn.click();
+        // TODO: Fix
+        console.log("Close Btn Clicked!");
+      } else {
+        console.log("No Modal Button found.");
+      }
+    }
+  };
 
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;
@@ -73,6 +157,7 @@ export default function DisplayProject({
       </div>
     );
 
+  // Return Regular Customer page
   return (
     <>
       <div className="grid grid-cols-3 gap-4 pb-2">
@@ -142,7 +227,7 @@ export default function DisplayProject({
         </div>
         <div className="text-left">
           <button
-            // onClick={handleDelete}
+            onClick={handleDelete}
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
           >
             Delete
@@ -155,7 +240,7 @@ export default function DisplayProject({
           Back To All Projects
         </Link>
       </div>
-      {/* <Modal modalStatus={modalStatus} handleButtonClick={handleButtonClick} /> */}
+      <Modal modalStatus={modalStatus} handleButtonClick={handleButtonClick} />
     </>
   );
 }

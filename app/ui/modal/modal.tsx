@@ -29,9 +29,9 @@ export default function Modal({ modalStatus, handleButtonClick }: Props) {
       <button
         type="button"
         id="modalBtn"
+        hidden
         className="py-3 px-4 items-center hidden gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
         data-hs-overlay="#hs-vertically-centered-modal"
-        hidden
         onClick={handleModal}
       >
         Launch Modal

@@ -185,6 +185,18 @@ export default function DisplayCustomer({
                   <p className="text-gray-800 dark:text-neutral-200">
                     {project.special_request}
                   </p>
+                  <br />
+                  {/* Btn to show current Project */}
+                  <button
+                    type="button"
+                    className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    <Link
+                      href={`../../projects/display-project/${project.project_id}`}
+                    >
+                      Go To Project
+                    </Link>
+                  </button>
                 </div>
               </div>
             </div>

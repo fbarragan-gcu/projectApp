@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
   
   try {
     const body = await request.json();
-    const newCustomer = await createProject(body);
-    return NextResponse.json(newCustomer, { status: 201})
+    const newProject = await createProject(body);
+    return NextResponse.json(newProject, { status: 201})
   } catch (err) {
     console.log("API Error", err);
     return NextResponse.json({ error: "Failed to create new Project" }, { status: 500});
@@ -35,8 +35,8 @@ export async function PUT(request: NextRequest) {
   
   try {
     const body = await request.json();
-    const newCustomer = await updateProject(body);
-    return NextResponse.json(newCustomer, { status: 200})
+    const updatedProject = await updateProject(body);
+    return NextResponse.json(updatedProject, { status: 200})
   } catch (err) {
     console.log("API Error", err);
     return NextResponse.json({ error: "Failed to edit Project" }, { status: 500});

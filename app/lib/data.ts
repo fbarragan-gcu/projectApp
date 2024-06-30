@@ -69,6 +69,7 @@ export async function getAllProjects(): Promise<Project[]> {
         SELECT project_id, customer_id, address_one, address_two, city, state, zip_code, scope_of_work, special_request,
         quoted_price, image_id, created_at, modified_at
         FROM project
+        ORDER BY project_id
         `;
         const projects = result.rows;
         return projects;
@@ -173,7 +174,7 @@ export async function createProject(project: Project): Promise<Project[]>{
 }
 
 // Edit Project By Project ID
-export async function updateProject(project: Project): Promise<Project[]> {
+export async function updateProject(project: Project): Promise<Project> {
     try {
         const result = await sql<Project>`
             UPDATE project
@@ -192,10 +193,27 @@ export async function updateProject(project: Project): Promise<Project[]> {
             WHERE project_id = ${project.project_id}
             RETURNING *;
         `;
-        return result.rows;
+        return result.rows[0];
     } catch (err) {
         console.log('Database Error: ', err);
         throw new Error("Failed to update Project record.");
+    }
+}
+
+// Delete Project By ID
+export async function deleteProject(projectId: string): Promise<Project | null> {
+    try {
+        const result = await sql<Project>`
+            DELETE FROM project
+            WHERE project_id = ${projectId}
+            RETURNING *
+        `
+        const deletedProject = result.rows[0];
+        // Return Number or Null if not found
+        return deletedProject || null;
+    } catch(err) {
+        console.log('Database Error: ', err);
+        throw new Error("Failed to delete Project record.")
     }
 }
 
