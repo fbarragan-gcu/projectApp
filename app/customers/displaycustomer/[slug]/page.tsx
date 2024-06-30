@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { HSAccordion } from "preline/preline";
 
+// Display Customer by Id
+// customers/displaycustomer/:id
 export default function DisplayCustomer({
   params,
 }: {
@@ -95,20 +97,31 @@ export default function DisplayCustomer({
 
   return (
     <>
-      <h2>Customer Info {params.slug}</h2>
-      <h3>
-        {customerInfo.first_name} {customerInfo.last_name}
-      </h3>
-
+      <h2>Customer ID: {params.slug}</h2>
       <div className="grid grid-cols-2 gap-1">
         <div className="col-span-2 ...">
           Customer: {customerInfo.first_name} {customerInfo.last_name}
         </div>
-        <div className="..">Email: {customerInfo.email_address}</div>
-        <div className="..">Phone Number: {customerInfo.phone_number}</div>
+        <div className="..">
+          Email:{" "}
+          <Link
+            href={`mailto:${customerInfo.email_address}`}
+            className=" text-blue-500"
+          >
+            {customerInfo.email_address}
+          </Link>
+        </div>
+        <div className="..">
+          Phone Number:{" "}
+          <Link
+            href={`tel:${customerInfo.phone_number}`}
+            className=" text-blue-500"
+          >
+            {customerInfo.phone_number}
+          </Link>
+        </div>
         <div className="col-span-2 .. pb-4">Projects: {projects.length}</div>
       </div>
-
       {
         <div className="hs-accordion-group">
           {/* Use index to set id for open/close */}
@@ -169,8 +182,8 @@ export default function DisplayCustomer({
         </div>
       }
 
-      <div className="flex justify-center items-center">
-        <Link href="../allcustomers" className="text-center">
+      <div className="flex justify-center items-center pt-4">
+        <Link href="../allcustomers" className="text-center text-blue-500">
           Back to all customers
         </Link>
       </div>

@@ -98,7 +98,9 @@ export default async function AllProjects() {
                         key={project.project_id}
                       >
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                          <Link href={`/DisplayProject/${project.project_id}`}>
+                          <Link
+                            href={`../projects/display-project/${project.project_id}`}
+                          >
                             {project.project_id}
                           </Link>
                         </td>
@@ -111,7 +113,11 @@ export default async function AllProjects() {
                           {project.city}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                          {project.scope_of_work}
+                          <Link
+                            href={`../projects/display-project/${project.project_id}`}
+                          >
+                            {project.scope_of_work}
+                          </Link>
                         </td>
                       </tr>
                     ) : null
