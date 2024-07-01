@@ -251,7 +251,7 @@ export async function getAdminById(id:string): Promise<Admin | null> {
     }
 }
 
-export async function getAppStats(): Promise<AppStats[]> {
+export async function getAppStats(): Promise<AppStats> {
     try {
         const results = await sql<AppStats>`
         SELECT
@@ -263,7 +263,7 @@ export async function getAppStats(): Promise<AppStats[]> {
         LEFT JOIN project p ON c.customer_id = p.customer_id
         LEFT JOIN admin a ON c.customer_id = a.admin_id;
         `
-        const stats = results.rows;
+        const stats = results.rows[0];
         return stats;
     } catch (err) {
         console.log("Database Error: ", err);
