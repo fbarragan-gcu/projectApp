@@ -10,6 +10,7 @@ export async function GET(
   const slug = params.slug
   try {
     const projects = await getProjectsByCustomerId(slug);
+    console.log(projects)
     if(!projects) {
       return NextResponse.json({error: `No Projects with By Customer ID:${slug} found.`}, { status: 404});
     }

@@ -10,6 +10,14 @@ export type Admin = {
     password: string;
 }
 
+// Application Stats for Main page
+export type AppStats = {
+    number_of_customers: number;
+    number_of_projects: number;
+    project_total: number;
+    number_of_admins: number;
+}
+
 // Customer Type
 export type Customer = {
     customer_id: string;

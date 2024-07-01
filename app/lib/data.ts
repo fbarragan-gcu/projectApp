@@ -1,5 +1,5 @@
 import { sql } from '@vercel/postgres';
-import { Customer, Project, Admin } from './definitions';
+import { Customer, Project, Admin, AppStats } from './definitions';
 
 /* Customer */
 
@@ -219,6 +219,8 @@ export async function deleteProject(projectId: string): Promise<Project | null> 
 
 
 /* Admin */
+
+// Get All Admins
 export async function getAllAdmins(): Promise<Admin[]> {
     try {
         const result = await sql<Admin>`
@@ -233,6 +235,7 @@ export async function getAllAdmins(): Promise<Admin[]> {
     }
 }
 
+// Get Admin By ID
 export async function getAdminById(id:string): Promise<Admin | null> {
     try {
         const result = await sql<Admin>`
@@ -245,5 +248,25 @@ export async function getAdminById(id:string): Promise<Admin | null> {
     } catch (err) {
         console.log("Database Error: ", err);
         throw new Error("Failed to fetch admin data");
+    }
+}
+
+export async function getAppStats(): Promise<AppStats[]> {
+    try {
+        const results = await sql<AppStats>`
+        SELECT
+        COUNT(DISTINCT c.customer_id) AS number_of_customers,
+        COUNT(p.project_id) AS number_of_projects,
+        COALESCE(SUM(p.quoted_price), 0) AS project_total,
+        COUNT(DISTINCT a.admin_id) AS number_of_admins
+        FROM customer c
+        LEFT JOIN project p ON c.customer_id = p.customer_id
+        LEFT JOIN admin a ON c.customer_id = a.admin_id;
+        `
+        const stats = results.rows;
+        return stats;
+    } catch (err) {
+        console.log("Database Error: ", err);
+        throw new Error("Failed to fetch Application Stats");
     }
 }
