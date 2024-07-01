@@ -24,7 +24,6 @@ export default function HomePage() {
 
         const data = await res.json();
         setAppStats(data[0]);
-        console.log(data[0]);
       } catch (error) {
         console.error("Error fetching customers:", error);
       }
