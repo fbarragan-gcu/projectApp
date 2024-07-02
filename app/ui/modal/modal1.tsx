@@ -8,15 +8,31 @@ type ModalStatus = {
 
 interface Props {
   modalStatus: ModalStatus;
-  handleButtonClick: () => void;
+  handleOkClick: () => void;
+  showCancelButton: boolean;
+  isOpen: boolean;
+  toggleModal: () => void;
 }
 
 // New Modal, will expand for better modularity.
-const Modal = ({ modalStatus, handleButtonClick }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Modal = ({
+  modalStatus,
+  handleOkClick,
+  showCancelButton = true,
+  isOpen,
+  toggleModal,
+}: Props) => {
+  // State to mange Modal Open/Close
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
+  // const toggleModal = () => {
+  //   setIsOpen(!isOpen);
+  // };
+
+  const handleOk = () => {
+    handleOkClick();
+    // setIsOpen(false);
+    toggleModal();
   };
 
   return (
@@ -48,13 +64,26 @@ const Modal = ({ modalStatus, handleButtonClick }: Props) => {
             <div className="mb-4">{modalStatus.status}</div>
             <div className="flex justify-end">
               <button
-                id="closeBtn"
+                id="okBtn"
                 type="button"
                 className={`px-4 py-2 rounded text-white ${modalStatus.css}`}
-                onClick={handleButtonClick}
+                onClick={handleOk}
               >
                 OK
               </button>
+              {/* Cancel Button  conditional */}
+              {showCancelButton && (
+                <button
+                  id="cancelBtn"
+                  type="button"
+                  className={`px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600 ml-2`}
+                  // onClick={handleClose}
+                  onClick={toggleModal}
+                  aria-label="Close"
+                >
+                  Cancel
+                </button>
+              )}
             </div>
           </div>
         </div>

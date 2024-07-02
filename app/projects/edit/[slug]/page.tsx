@@ -23,6 +23,13 @@ export default function Edit({ params }: { params: { slug: string } }) {
     css: "",
   });
 
+  // Open/Close Modal State
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Open/Close Modal Function
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
   // for redirect
   const router = useRouter();
 
@@ -127,9 +134,10 @@ export default function Edit({ params }: { params: { slug: string } }) {
     });
   };
 
+  // TODO: Update Modal Code
   // Edit Project and trigger Modal Success/Error
   const editProject = (data: Project) => {
-    const modalBtn = document.getElementById("modalBtn");
+    // const modalBtn = document.getElementById("modalBtn");
     // Edit Project Successful
     try {
       // fetch method for PUT
@@ -147,7 +155,8 @@ export default function Edit({ params }: { params: { slug: string } }) {
         css: "bg-teal-500",
       });
 
-      modalBtn?.click();
+      toggleModal();
+      // modalBtn?.click();
       console.log("Project Edited:", data);
     } catch (error) {
       // API Errors
@@ -157,7 +166,8 @@ export default function Edit({ params }: { params: { slug: string } }) {
         css: "bg-red-500",
       });
 
-      modalBtn?.click();
+      toggleModal();
+      // modalBtn?.click();
       console.error("Error editing project:");
     }
   };
@@ -445,7 +455,10 @@ export default function Edit({ params }: { params: { slug: string } }) {
             {/* Modal Component with Props passed in */}
             <Modal
               modalStatus={modalStatus}
-              handleButtonClick={handleButtonClick}
+              handleOkClick={handleButtonClick}
+              isOpen={isOpen}
+              toggleModal={toggleModal}
+              showCancelButton={false}
             />
           </div>
           <div className="w-full px-2 pt-4 flex justify-center space-x-4">

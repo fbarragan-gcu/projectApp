@@ -22,6 +22,17 @@ export default function DisplayProject({
     status: "",
     css: "",
   });
+  // Open/Close Modal State
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+
+  // Open/Close Modal Function
+  const toggleModal1 = () => {
+    setIsOpen1(!isOpen1);
+  };
+  const toggleModal2 = () => {
+    setIsOpen2(!isOpen2);
+  };
 
   // for redirect
   const router = useRouter();
@@ -69,14 +80,59 @@ export default function DisplayProject({
   // Display project location on Google Maps
   const googleMapsLoc = `https://www.google.com/maps/search/?api=1&query=${project?.address_one}+${project?.city}+${project?.state}`;
 
-  // TODO: Include ProjectId
   // TODO: Possible Double check
   const handleDelete = () => {
     // Handle Delete Modal
-    console.log(`ProjectId:${project?.project_id} Deleted.`);
-    deleteProject();
+    console.log(
+      `Initializing project deletion for ProjectId:${project?.project_id}`
+    );
+    confirmDelete();
+    // deleteProject();
   };
 
+  // Initial Delete Modal
+  const confirmDelete = async () => {
+    const projectId = project?.project_id;
+    // Set Modal Options
+    setModalStatus({
+      title: "Confirm Delete",
+      status: `Are you sure you want to delete Project ${projectId}`,
+      css: "bg-teal-500 hover:bg-teal-600",
+    });
+    // Opens Modal
+    toggleModal1();
+  };
+
+  // Handle Modal 1 OK button
+  const handleConfirmButtonClick = () => {
+    console.log("Ok Clicked 1");
+    console.log("Proceeding to Delete Project");
+    console.log("Project Deletion confirmed");
+    // Show Confirm delet modal
+    confirmDelete1();
+  };
+
+  // Deletion Successful Modal
+  const confirmDelete1 = async () => {
+    const projectId = project?.project_id;
+    // Set Modal Options
+    setModalStatus({
+      title: "Deletion Successfull",
+      status: `Project ${projectId} has been deleted`,
+      css: "bg-teal-500 hover:bg-teal-600",
+    });
+    // Opens Modal
+    toggleModal2();
+  };
+
+  // Handle Modal 2 OK button
+  const handleConfirmButtonClick1 = () => {
+    console.log("Ok Clicked 2");
+    // confirmDelete1();
+    console.log("Project Deletion conmpleted");
+  };
+
+  // TODO: Remove old Modal Code
   // TODO: Include ProjectId
   const deleteProject = async () => {
     const modalBtn = document.getElementById("modalBtn");
@@ -121,7 +177,17 @@ export default function DisplayProject({
 
   // TODO: Fix Delete, Ensure success/fail
   // Handle Modal Click
+
+  // Move Confirm logic here
+  // TODO: Move Delete here
+
+  // // Move Close Logic here
+  // const handleCloseButtonClick = () => {
+  //   // Test Close
+  //   console.log("Close Clicked");
+  // };
   const handleButtonClick = () => {
+    console.log("Ok Clicked");
     // Customer Success redirect to All Customers
     if (modalStatus.title === "Success") {
       console.log("OK 200...");
@@ -131,7 +197,7 @@ export default function DisplayProject({
       // Inform of error and prompt back to creation
       console.log("Closing modal...");
       router.push("../allprojects");
-      const modalCloseBtn = document.getElementById("closeBtn") as HTMLElement;
+      const modalCloseBtn = document.getElementById("cancelBtn") as HTMLElement;
       if (modalCloseBtn) {
         modalCloseBtn.click();
         // TODO: Fix
@@ -240,7 +306,21 @@ export default function DisplayProject({
           Back To All Projects
         </Link>
       </div>
-      <Modal modalStatus={modalStatus} handleButtonClick={handleButtonClick} />
+      <Modal
+        modalStatus={modalStatus}
+        handleOkClick={handleConfirmButtonClick}
+        isOpen={isOpen1}
+        toggleModal={toggleModal1}
+        showCancelButton={true}
+      />
+      <Modal
+        modalStatus={modalStatus}
+        handleOkClick={handleConfirmButtonClick1}
+        isOpen={isOpen2}
+        toggleModal={toggleModal2}
+        showCancelButton={false}
+      />
+      {/* <Modal modalStatus={modalStatus} handleButtonClick={handleButtonClick} /> */}
     </>
   );
 }
