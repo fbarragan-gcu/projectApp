@@ -75,12 +75,12 @@ export default function AllCustomers() {
                       key={customer.customer_id}
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                        <Link href={"displaycustomer/" + customer.customer_id}>
+                        <Link href={"display-customer/" + customer.customer_id}>
                           {customer.customer_id}
                         </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        <Link href={"displaycustomer/" + customer.customer_id}>
+                        <Link href={"display-customer/" + customer.customer_id}>
                           {customer.first_name} {customer.last_name}
                         </Link>
                       </td>

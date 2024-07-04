@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { HSAccordion } from "preline/preline";
 
 // Display Customer by Id
-// customers/displaycustomer/:id
+// customers/display-customer/:id
 export default function DisplayCustomer({
   params,
 }: {
@@ -98,7 +98,7 @@ export default function DisplayCustomer({
       <div>
         Customer with ID:{params.slug} not found
         <div className="flex justify-center items-center pt-4">
-          <Link href="../allcustomers" className="text-center text-blue-500">
+          <Link href="../all-customers" className="text-center text-blue-500">
             Back to all customers
           </Link>
         </div>
@@ -205,7 +205,7 @@ export default function DisplayCustomer({
       }
 
       <div className="flex justify-center items-center pt-4">
-        <Link href="../allcustomers" className="text-center text-blue-500">
+        <Link href="../all-customers" className="text-center text-blue-500">
           Back to all customers
         </Link>
       </div>

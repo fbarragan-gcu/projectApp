@@ -201,7 +201,7 @@ export default function Edit({ params }: { params: { slug: string } }) {
       <div>
         Project with ID: {params.slug} not found
         <div className="flex justify-center items-center pt-4">
-          <Link href="../allprojects" className="text-center text-blue-500">
+          <Link href="../all-projects" className="text-center text-blue-500">
             Back to all projects
           </Link>
         </div>

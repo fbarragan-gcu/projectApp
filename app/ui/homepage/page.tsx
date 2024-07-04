@@ -1,11 +1,22 @@
 "use client";
 import { AppStats } from "@/app/lib/definitions";
+import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+// Define user prop, can have user or nothing
+interface Props {
+  user: User | null | undefined;
+}
+
 // Application landing page
-export default function HomePage() {
+export default function HomePage({ user }: Props) {
   // React State VARS
   const [appStats, setAppStats] = useState<AppStats>();
+  const [isLoggedIn, setIsLoggedIn] = useState<User | null | undefined>(user);
+  const router = useRouter();
+  const pathname = usePathname();
   // Get All Customer data via API call
   // Fetch data on page reload
   useEffect(() => {
@@ -29,8 +40,17 @@ export default function HomePage() {
       }
     }
 
+    async function checkUser() {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setIsLoggedIn(user);
+    }
+
+    checkUser();
     getAppStats();
-  }, []);
+  }, [pathname]);
 
   // Function to format currency to USD
   const formatCurrency = (amount: number) => {
@@ -42,6 +62,7 @@ export default function HomePage() {
 
   return (
     <>
+      {user ? <p>Hello {user.email}</p> : null}
       <h1>Main Page</h1>
       <h1>Summary Data</h1>
       <p>Number of Customers: {appStats?.number_of_customers}</p>

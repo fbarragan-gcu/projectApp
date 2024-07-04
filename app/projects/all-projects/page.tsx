@@ -1,39 +1,59 @@
+"use client";
 import { Project, ProjectFull, Customer } from "@/app/lib/definitions";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-// Get All Projects data via API call
-async function getAllProjects() {
-  // Call getAllProjects Via API fetch call
-  const res = await fetch(`${process.env.API_URL}/api/projects`, {
-    cache: "no-store",
-  });
+// Display All Project Data
+export default function AllProjects() {
+  // React State VARS
+  const [allProjects, setAllProjects] = useState<Project[]>([]);
+  const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  // Get All Customers and Project data via API calls
+  // Fetch data on page reload
+  useEffect(() => {
+    // using NEXT_PUBLIC_API_URL since call is client side
+    async function getAllCustomers() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/`,
+          {
+            cache: "no-store",
+          }
+        );
+        if (!res.ok) {
+          throw new Error("Faile to fetch customer data.");
+        }
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
+        const data = await res.json();
+        setAllCustomers(data);
+      } catch (error) {
+        console.error("Error fetching customers: ", error);
+      }
+    }
 
-  return res.json();
-}
+    async function getAllProjects() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/projects`,
+          {
+            cache: "no-store",
+          }
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch project data.");
+        }
 
-// Get All Customer data via API call
-async function getAllCustomers() {
-  // Call getAllCustomers Via API fetch call
-  const res = await fetch(`${process.env.API_URL}/api/customers`, {
-    cache: "no-store",
-  });
+        const data = await res.json();
+        setAllProjects(data);
+      } catch (error) {
+        console.log("Error fetching projects: ", error);
+      }
+    }
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-export default async function AllProjects() {
-  const allProjects = await getAllProjects();
-  const allCustomers = await getAllCustomers();
+    // Fetch all data.
+    getAllCustomers();
+    getAllProjects();
+  }, []);
 
   const createProfile = (allProjects: Project, allCustomers: Customer) => {
     if (allProjects.customer_id === allCustomers.customer_id) {
@@ -49,7 +69,7 @@ export default async function AllProjects() {
 
   // Remove null values (projects without matching customers)
   const projectInfo = profiles.filter(
-    (profile: ProjectFull) => profile !== null
+    (profile: ProjectFull | null) => profile !== null
   );
 
   return (
@@ -90,7 +110,7 @@ export default async function AllProjects() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-                  {projectInfo.map((project: ProjectFull) =>
+                  {projectInfo.map((project) =>
                     // Remove null values if any
                     project ? (
                       <tr
@@ -106,7 +126,7 @@ export default async function AllProjects() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                           <Link
-                            href={`../customers/displaycustomer/${project.customer_id}`}
+                            href={`../customers/display-customer/${project.customer_id}`}
                           >{`${project.first_name} ${project.last_name}`}</Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">

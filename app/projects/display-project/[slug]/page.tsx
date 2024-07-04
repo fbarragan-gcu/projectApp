@@ -192,11 +192,11 @@ export default function DisplayProject({
     if (modalStatus.title === "Success") {
       console.log("OK 200...");
       console.log("Redirecting...");
-      router.push("../allprojects");
+      router.push("../all-projects");
     } else {
       // Inform of error and prompt back to creation
       console.log("Closing modal...");
-      router.push("../allprojects");
+      router.push("../all-projects");
       const modalCloseBtn = document.getElementById("cancelBtn") as HTMLElement;
       if (modalCloseBtn) {
         modalCloseBtn.click();
@@ -216,7 +216,7 @@ export default function DisplayProject({
       <div>
         Project with ID: {params.slug} not found
         <div className="flex justify-center items-center pt-4">
-          <Link href="../allprojects" className="text-center text-blue-500">
+          <Link href="../all-projects" className="text-center text-blue-500">
             Back to all projects
           </Link>
         </div>
@@ -232,7 +232,7 @@ export default function DisplayProject({
             Customer:
             <Link
               className="text-blue-500"
-              href={`../../customers/displaycustomer/${customerInfo?.customer_id}`}
+              href={`../../customers/display-customer/${customerInfo?.customer_id}`}
             >
               {` ${customerInfo?.first_name} ${customerInfo?.last_name}`}
             </Link>
@@ -302,7 +302,7 @@ export default function DisplayProject({
       </div>
       <br />
       <div className="flex justify-center items-center">
-        <Link href={"../allprojects"} className="text-center text-blue-500">
+        <Link href={"../all-projects"} className="text-center text-blue-500">
           Back To All Projects
         </Link>
       </div>
