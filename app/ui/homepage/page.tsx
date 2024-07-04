@@ -5,16 +5,12 @@ import { User } from "@supabase/supabase-js";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// Define user prop, can have user or nothing
-interface Props {
-  user: User | null | undefined;
-}
-
 // Application landing page
-export default function HomePage({ user }: Props) {
+// export default function HomePage({ user }: Props) {
+export default function HomePage() {
   // React State VARS
   const [appStats, setAppStats] = useState<AppStats>();
-  const [isLoggedIn, setIsLoggedIn] = useState<User | null | undefined>(user);
+  const [isLoggedIn, setIsLoggedIn] = useState<User | null | undefined>(null);
   const router = useRouter();
   const pathname = usePathname();
   // Get All Customer data via API call
@@ -62,7 +58,7 @@ export default function HomePage({ user }: Props) {
 
   return (
     <>
-      {user ? <p>Hello {user.email}</p> : null}
+      {isLoggedIn ? <p>Hello {isLoggedIn.email}</p> : null}
       <h1>Main Page</h1>
       <h1>Summary Data</h1>
       <p>Number of Customers: {appStats?.number_of_customers}</p>
