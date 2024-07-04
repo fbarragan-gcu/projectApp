@@ -3,14 +3,6 @@ import { login } from "./actions";
 
 export default function LoginPage() {
   return (
-    // <form>
-    //   <label htmlFor="email">Email:</label>
-    //   <input id="email" name="email" type="email" required />
-    //   <label htmlFor="password">Password:</label>
-    //   <input id="password" name="password" type="password" required />
-    //   <button formAction={login}>Log in</button>
-    //   <button formAction={signup}>Sign up</button>
-    // </form>
     <>
       <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         <div className="p-4 sm:p-7">

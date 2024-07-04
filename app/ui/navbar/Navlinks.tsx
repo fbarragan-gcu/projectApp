@@ -1,14 +1,14 @@
 "use client";
+
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
 
 interface Props {
-  companyName: string;
   user: User | null | undefined;
 }
 
 // Display Links for logged-in or normal users
-export default function NavLinks({ companyName, user }: Props) {
+export default function NavLinks({ user }: Props) {
   return (
     <>
       <nav
@@ -20,7 +20,8 @@ export default function NavLinks({ companyName, user }: Props) {
             className="flex-none text-xl font-semibold dark:text-white"
             href="/"
           >
-            {companyName}
+            {/* {companyName} */}
+            ProjectApp
           </Link>
           <div className="sm:hidden">
             <button
