@@ -58,8 +58,7 @@ export default function HomePage() {
 
   return (
     <>
-      {isLoggedIn ? <p>Hello {isLoggedIn.email}</p> : null}
-      <h1>Main Page</h1>
+      {isLoggedIn ? <p>Hello {isLoggedIn.user_metadata.first_name}</p> : null}
       <h1>Summary Data</h1>
       <p>Number of Customers: {appStats?.number_of_customers}</p>
       <p>Number of Projects: {appStats?.number_of_projects}</p>

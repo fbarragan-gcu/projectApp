@@ -31,7 +31,11 @@ export default function Dash() {
   return (
     <>
       <p>Admin Dashboard</p>
-      <p>Welcome: {user?.email}</p>
+      <p>
+        Welcome: {user?.user_metadata.first_name}{" "}
+        {user?.user_metadata.last_name}
+      </p>
+      <p>Email: {user?.email}</p>
       <button
         type="button"
         className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none"

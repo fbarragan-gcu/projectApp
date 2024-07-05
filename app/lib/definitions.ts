@@ -10,6 +10,16 @@ export type Admin = {
     password: string;
 }
 
+// Supabase User
+export type User = {
+    admin_id: string;
+    first_name: string;
+    last_name: string;
+    user_name: string;
+    email: string;
+    password: string;
+}
+
 // Application Stats for Main page
 export type AppStats = {
     number_of_customers: number;

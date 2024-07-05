@@ -26,5 +26,4 @@ export async function login(formData: FormData) {
   console.log("good:")
   revalidatePath('/', 'layout')
   return { success: true };
-  redirect('/')
 }
