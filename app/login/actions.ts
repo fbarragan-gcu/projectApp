@@ -15,12 +15,16 @@ export async function login(formData: FormData) {
     password: formData.get('password') as string,
   }
 
+  // Destructure and only pull out Error.
   const { error } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
-    redirect('/error')
+    console.log(error?.message); // NEED THIS "Invalid login credentials"
+    return {error: error.message};
   }
 
+  console.log("good:")
   revalidatePath('/', 'layout')
+  return { success: true };
   redirect('/')
 }

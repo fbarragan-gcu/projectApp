@@ -20,7 +20,6 @@ export default function NavLinks({ user }: Props) {
             className="flex-none text-xl font-semibold dark:text-white"
             href="/"
           >
-            {/* {companyName} */}
             ProjectApp
           </Link>
           <div className="sm:hidden">

@@ -1,7 +1,34 @@
+"use client";
 import Link from "next/link";
 import { login } from "./actions";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
+// Login Page utilizing Server Action to check database.
+// TODO: More Error Message Displays
 export default function LoginPage() {
+  // State for Successful or Error Login
+  const [loginStatus, setLoginStatus] = useState<string | null>(null);
+  // for redirect
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const response = await login(formData);
+
+    // response might not be present so use null
+    if (response?.error) {
+      setLoginStatus(response.error);
+      alert("Error Loggin in.");
+      console.log(loginStatus);
+    } else if (response.success) {
+      setLoginStatus(null);
+      // redirect to / after successful login
+      router.push("/");
+    }
+  };
   return (
     <>
       <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
@@ -58,7 +85,8 @@ export default function LoginPage() {
             </div>
 
             {/* <!-- Form --> */}
-            <form>
+            {/* <form> */}
+            <form onSubmit={handleSubmit}>
               <div className="grid gap-y-4">
                 {/* <!-- Form Group --> */}
                 <div>
@@ -177,6 +205,9 @@ export default function LoginPage() {
                 </button>
               </div>
             </form>
+            {loginStatus && (
+              <p className="mt-4 text-red-500 text-sm">{loginStatus}</p>
+            )}
             {/* <!-- End Form --> */}
           </div>
         </div>
