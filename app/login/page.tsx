@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 // Login Page utilizing Server Action to check database.
-// TODO: More Error Message Displays
 export default function LoginPage() {
   // State for Successful or Error Login
   const [loginStatus, setLoginStatus] = useState<string | null>(null);

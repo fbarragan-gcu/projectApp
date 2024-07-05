@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 
+// TODO: Check for possible duplicate Emails on creation
 export async function signup(formData: FormData) {
   const supabase = createClient()
 
@@ -22,11 +23,15 @@ export async function signup(formData: FormData) {
   }
 
   const { error } = await supabase.auth.signUp(data)
+  // const response = await supabase.auth.signUp(data)
+  // console.log(response)
 
-  if (error) {
-    redirect('/error')
+  if (error?.message) {
+    console.log(error.message);
+    return { error: error.message };
   }
 
+  console.log("Registration Successful");
   revalidatePath('/', 'layout')
-  redirect('/')
+  return { success: true }
 }
