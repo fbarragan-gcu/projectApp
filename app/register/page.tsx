@@ -32,7 +32,9 @@ export default function Register() {
     formData.append("password", data.password);
 
     // Verify that passwords match
-    const passMatch = getValues("password") === getValues("password_confirm");
+    // Verify that passwords match
+    const passMatch = data.password === data.password_confirm;
+
     if (!passMatch) {
       setRegStatus("Passwords do not Match");
       return;
