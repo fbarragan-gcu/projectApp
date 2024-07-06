@@ -5,12 +5,12 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // List of always allowed paths
-  const allowedPaths = ['/', '/register', '/login', '/about', '/ui/homepage', '/api/admins/stats'];
+  // const allowedPaths = ['/', '/register', '/login', '/about', '/ui/homepage', '/api/admins/stats'];
 
-  // Allow navigation to any of the allowed paths
-  if (allowedPaths.includes(pathname)) {
-    return NextResponse.next();
-  }
+  // // Allow navigation to any of the allowed paths
+  // if (allowedPaths.includes(pathname)) {
+  //   return NextResponse.next();
+  // }
 
   return await updateSession(request)
 }
