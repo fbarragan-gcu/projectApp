@@ -80,14 +80,14 @@ export default function DisplayProject({
   // Display project location on Google Maps
   const googleMapsLoc = `https://www.google.com/maps/search/?api=1&query=${project?.address_one}+${project?.city}+${project?.state}`;
 
-  // TODO: Possible Double check
+  // Delete btn clicked
   const handleDelete = () => {
     // Handle Delete Modal
     console.log(
       `Initializing project deletion for ProjectId:${project?.project_id}`
     );
+    // Open Model to confirm delete
     confirmDelete();
-    // deleteProject();
   };
 
   // Initial Delete Modal
@@ -99,21 +99,22 @@ export default function DisplayProject({
       status: `Are you sure you want to delete Project ${projectId}`,
       css: "bg-teal-500 hover:bg-teal-600",
     });
-    // Opens Modal
+    // Opens Modal if OK clicked
     toggleModal1();
   };
 
   // Handle Modal 1 OK button
   const handleConfirmButtonClick = () => {
+    // Clicked OK to delete
     console.log("Ok Clicked 1");
     console.log("Proceeding to Delete Project");
+    // Proceed to delete project
+    processDelete();
     console.log("Project Deletion confirmed");
-    // Show Confirm delet modal
-    confirmDelete1();
   };
 
   // Deletion Successful Modal
-  const confirmDelete1 = async () => {
+  const processDelete = async () => {
     const projectId = project?.project_id;
     // Set Modal Options
     setModalStatus({
@@ -122,20 +123,19 @@ export default function DisplayProject({
       css: "bg-teal-500 hover:bg-teal-600",
     });
     // Opens Modal
+    deleteProject();
     toggleModal2();
   };
 
   // Handle Modal 2 OK button
+  // Confirms delete and navigate to all-projects
   const handleConfirmButtonClick1 = () => {
     console.log("Ok Clicked 2");
-    // confirmDelete1();
     console.log("Project Deletion conmpleted");
+    router.push("../all-projects");
   };
 
-  // TODO: Remove old Modal Code
-  // TODO: Include ProjectId
   const deleteProject = async () => {
-    const modalBtn = document.getElementById("modalBtn");
     const projectId = project?.project_id;
     try {
       // Delete Project
@@ -154,57 +154,15 @@ export default function DisplayProject({
       if (!response.ok) {
         throw new Error(`Failed to delete project with ID ${projectId}`);
       }
-      // Update Modal for Successful delete
-      setModalStatus({
-        title: "Success",
-        status: "Project Deleted",
-        css: "bg-teal-500 hover:bg-teal-600",
-      });
-      modalBtn?.click();
       console.log("Project Deleted");
     } catch (error) {
       console.error("Error deleting project");
+      // Set Modal Options
       setModalStatus({
-        title: "Error",
-        status: "Error Deleting Project",
+        title: "Error Deleting Project",
+        status: `Project ${projectId} has not been deleted`,
         css: "bg-red-500 hover:bg-red-600",
       });
-
-      modalBtn?.click();
-      console.log("Error Deleting Project");
-    }
-  };
-
-  // TODO: Fix Delete, Ensure success/fail
-  // Handle Modal Click
-
-  // Move Confirm logic here
-  // TODO: Move Delete here
-
-  // // Move Close Logic here
-  // const handleCloseButtonClick = () => {
-  //   // Test Close
-  //   console.log("Close Clicked");
-  // };
-  const handleButtonClick = () => {
-    console.log("Ok Clicked");
-    // Customer Success redirect to All Customers
-    if (modalStatus.title === "Success") {
-      console.log("OK 200...");
-      console.log("Redirecting...");
-      router.push("../all-projects");
-    } else {
-      // Inform of error and prompt back to creation
-      console.log("Closing modal...");
-      router.push("../all-projects");
-      const modalCloseBtn = document.getElementById("cancelBtn") as HTMLElement;
-      if (modalCloseBtn) {
-        modalCloseBtn.click();
-        // TODO: Fix
-        console.log("Close Btn Clicked!");
-      } else {
-        console.log("No Modal Button found.");
-      }
     }
   };
 
@@ -306,6 +264,7 @@ export default function DisplayProject({
           Back To All Projects
         </Link>
       </div>
+      {/* Initial Delete Click */}
       <Modal
         modalStatus={modalStatus}
         handleOkClick={handleConfirmButtonClick}
@@ -313,6 +272,7 @@ export default function DisplayProject({
         toggleModal={toggleModal1}
         showCancelButton={true}
       />
+      {/* Confirmation of Delete */}
       <Modal
         modalStatus={modalStatus}
         handleOkClick={handleConfirmButtonClick1}
@@ -320,7 +280,6 @@ export default function DisplayProject({
         toggleModal={toggleModal2}
         showCancelButton={false}
       />
-      {/* <Modal modalStatus={modalStatus} handleButtonClick={handleButtonClick} /> */}
     </>
   );
 }

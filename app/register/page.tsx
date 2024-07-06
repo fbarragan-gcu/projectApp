@@ -5,16 +5,30 @@ import { User } from "../lib/definitions";
 import { signup } from "./actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Modal from "../ui/modal/modal1";
 
 // Register a new Admin Page
 // TODO: Include Modal for success or error, and re-route after success.
 export default function Register() {
+  // React State VARS for Modal
+  const [modalStatus, setModalStatus] = useState({
+    title: "",
+    status: "",
+    css: "",
+  });
+
+  // Open/Close Modal State
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Open/Close Modal Function
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
   // State for Successful or Error Login
   const [regStatus, setRegStatus] = useState<string | null>(null);
   // react-hook-form VARS
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<User>();
@@ -32,7 +46,6 @@ export default function Register() {
     formData.append("password", data.password);
 
     // Verify that passwords match
-    // Verify that passwords match
     const passMatch = data.password === data.password_confirm;
 
     if (!passMatch) {
@@ -46,16 +59,53 @@ export default function Register() {
       if (response.error) {
         setRegStatus(response.error);
         alert("Error With Registration Process");
+        setModalStatus({
+          title: "Error",
+          status: "Error Registering User",
+          css: "bg-red-500",
+        });
       } else if (response.success) {
         setRegStatus(null);
-        alert("Account Created");
-        router.push("/");
+        setModalStatus({
+          title: "Success",
+          status: "New User Registered",
+          css: "bg-teal-500",
+        });
+
+        toggleModal();
       }
     } catch (error) {
       setRegStatus("An unexpected error has occurred");
       console.log("Error during registration: ", error);
+      setModalStatus({
+        title: "Unknow Error",
+        status: "An Unknown Error has Occured",
+        css: "bg-red-500",
+      });
     }
   };
+
+  // Handle Modal Click
+  const handleButtonClick = () => {
+    // Project Success redirect to All Customers
+    if (modalStatus.title === "Success") {
+      console.log("OK 200...");
+      console.log("Redirecting...");
+      router.push("/");
+    } else {
+      // Inform of error and prompt back to creation
+      console.log("Closing modal...");
+      const modalCloseBtn = document.querySelector(
+        "#hs-vertically-centered-modal"
+      ) as HTMLElement;
+      if (modalCloseBtn) {
+        modalCloseBtn.click();
+      } else {
+        console.log("No Modal Button found.");
+      }
+    }
+  };
+
   return (
     <>
       <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
@@ -339,6 +389,14 @@ export default function Register() {
               </div>
             </form>
             {/* <!-- End Form --> */}
+            {/* Modal Component with Props passed in */}
+            <Modal
+              modalStatus={modalStatus}
+              handleOkClick={handleButtonClick}
+              isOpen={isOpen}
+              toggleModal={toggleModal}
+              showCancelButton={false}
+            />
           </div>
         </div>
       </div>

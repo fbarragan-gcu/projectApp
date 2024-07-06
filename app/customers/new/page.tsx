@@ -2,13 +2,25 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Customer } from "@/app/lib/definitions";
+import { User } from "@supabase/supabase-js";
 import Modal from "@/app/ui/modal/modal";
 import { HSOverlay } from "preline/preline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getUser } from "@/utils/supabase/queries";
+import { createClient } from "@/utils/supabase/client";
+
+const supabase = createClient();
 
 // Create New Customer Page
 export default function New() {
+  // Get Admin
+  const [admin, setAdmin] = useState<User | null>(null);
+  // Query for Admin ID
+  useEffect(() => {
+    getUser(supabase).then(setAdmin).catch(console.error);
+  }, []);
+
   // React State VARS for Modal
   const [modalStatus, setModalStatus] = useState({
     title: "",
@@ -23,13 +35,23 @@ export default function New() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Customer>();
+  } = useForm<Customer>({
+    defaultValues: {
+      admin_id: admin?.id,
+    },
+  });
 
+  // TODO: Fix Sloppy Code, not using spread
   // Handle Form Submit Button and Trigger Modal
   const onSubmit: SubmitHandler<Customer> = (data) => {
-    console.log(data);
+    // Append admin_id to form data
+    const data1 = {
+      ...data,
+      admin_id: admin?.id ?? "", // Append admin_id from admin state
+    };
+    console.log(data1);
     // Modal and REST API call
-    createCustomers(data);
+    createCustomers(data1);
   };
 
   // This will reset the form values
@@ -77,7 +99,7 @@ export default function New() {
     if (modalStatus.title === "Success") {
       console.log("OK 200...");
       console.log("Redirecting...");
-      router.push("/customers/allcustomers");
+      router.push("/customers/all-customers");
     } else {
       // Inform of error and prompt back to creation
       console.log("Closing modal...");
@@ -91,7 +113,6 @@ export default function New() {
       }
     }
   };
-
   return (
     <>
       <p>Create a New Customer</p>
@@ -102,10 +123,10 @@ export default function New() {
           type="hidden"
           className="form-control"
           id="admin_id"
-          placeholder="02"
           readOnly
-          value={1}
-          {...register("admin_id", { valueAsNumber: true })}
+          value={admin?.id}
+          // {...register("admin_id", { valueAsNumber: true })}
+          {...register("admin_id")}
         />
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/2 px-2">

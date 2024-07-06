@@ -53,7 +53,6 @@ export default function New() {
 
   // Handle Form Submit Button and Trigger Modal
   const onSubmit: SubmitHandler<Project> = (data) => {
-    console.log(data);
     // Modal and REST API call
     createProject(data);
   };
@@ -83,7 +82,6 @@ export default function New() {
         body: JSON.stringify(data),
       });
       modalBtn?.click();
-      console.log("Project Created:", data);
     } catch (error) {
       // API Errors
       setModalStatus({
@@ -103,7 +101,7 @@ export default function New() {
     if (modalStatus.title === "Success") {
       console.log("OK 200...");
       console.log("Redirecting...");
-      router.push("/projects/allprojects");
+      router.push("/projects/all-projects");
     } else {
       // Inform of error and prompt back to creation
       console.log("Closing modal...");

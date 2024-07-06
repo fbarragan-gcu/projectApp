@@ -20,7 +20,7 @@ export default function HomePage() {
     async function getAppStats() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admins/stats`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/stats`,
           {
             cache: "no-store",
           }
@@ -68,7 +68,7 @@ export default function HomePage() {
           ? formatCurrency(appStats.project_total)
           : "N/A"}
       </p>
-      <p>Number of Admins: {appStats?.number_of_admins}</p>
+      {/* <p>Number of Admins: {appStats?.number_of_admins}</p> */}
     </>
   );
 }

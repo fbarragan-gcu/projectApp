@@ -1,3 +1,4 @@
+import supabase from "@/app/lib/supabaseClient";
 import { createClient } from "@/utils/supabase/server";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
@@ -27,3 +28,16 @@ export const logoutUser = (async (supabase: SupabaseClient) => {
         throw new Error("Error with User logout");
     }
 })
+
+// Get All registered users
+// Must be Admin 
+export const getAllUsers = cache(async (supabase: SupabaseClient) => {
+    try {
+      const { data: { users }, error } = await supabase.auth.admin.listUsers();
+      if (error) throw error;
+      return users;
+    } catch (error) {
+      console.error('Error fetching users: ', error);
+      throw error;
+    }
+  });
