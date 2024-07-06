@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 
+// Middleware to secure routes
+// TODO: Fix allowedPaths, currently causing cookie error.
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 

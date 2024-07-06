@@ -243,7 +243,13 @@ export default function DisplayProject({
           <h4>Quoted Price: ${project?.quoted_price}</h4>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      {/* Project Btn section */}
+      <div className="flex justify-center space-x-4 mt-4">
+        <div className="text-right">
+          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+            <Link href={`../create-pdf/${project.project_id}`}>Create PDF</Link>
+          </button>
+        </div>
         <div className="text-right">
           <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300">
             <Link href={`../edit/${project.project_id}`}>Edit</Link>
@@ -258,12 +264,13 @@ export default function DisplayProject({
           </button>
         </div>
       </div>
-      <br />
-      <div className="flex justify-center items-center">
+
+      <div className="flex justify-center mt-4">
         <Link href={"../all-projects"} className="text-center text-blue-500">
           Back To All Projects
         </Link>
       </div>
+
       {/* Initial Delete Click */}
       <Modal
         modalStatus={modalStatus}
