@@ -58,7 +58,6 @@ export default function Register() {
       const response = await signup(formData);
       if (response.error) {
         setRegStatus(response.error);
-        alert("Error With Registration Process");
         setModalStatus({
           title: "Error",
           status: "Error Registering User",

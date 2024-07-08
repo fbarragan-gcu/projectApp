@@ -20,7 +20,6 @@ export default function LoginPage() {
     // response might not be present so use null
     if (response?.error) {
       setLoginStatus(response.error);
-      alert("Error Loggin in.");
       console.log(loginStatus);
     } else if (response.success) {
       setLoginStatus(null);
@@ -136,12 +135,13 @@ export default function LoginPage() {
                     >
                       Password
                     </label>
-                    <a
+                    {/* TODO: Implement Password Reset */}
+                    {/* <a
                       className="text-sm text-blue-600 decoration-2 hover:underline font-medium"
                       href="../examples/html/recover-account.html"
                     >
                       Forgot password?
-                    </a>
+                    </a> */}
                   </div>
                   <div className="relative">
                     <input
@@ -174,8 +174,9 @@ export default function LoginPage() {
                 </div>
                 {/* <!-- End Form Group --> */}
 
+                {/* TODO: Implement Checkbox */}
                 {/* <!-- Checkbox --> */}
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <div className="flex">
                     <input
                       id="remember-me"
@@ -192,7 +193,7 @@ export default function LoginPage() {
                       Remember me
                     </label>
                   </div>
-                </div>
+                </div> */}
                 {/* <!-- End Checkbox --> */}
 
                 <button
