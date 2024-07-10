@@ -15,80 +15,72 @@ export default function DisplayCustomer({
   const [customerInfo, setCustomerInfo] = useState<Customer | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dataFetched, setDataFetched] = useState(false);
 
-  // Pull Customer information Via Slug
+  // Pull Customer information and Projects Via Slug
   useEffect(() => {
-    if (params.slug) {
-      const fetchCustomer = async () => {
+    const fetchCustomerAndProjects = async () => {
+      if (params.slug) {
         try {
-          const res = await fetch(
+          // Fetch customer information
+          const customerRes = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/customers/${params.slug}`,
             {
               cache: "no-store",
             }
           );
-          if (!res.ok) {
+          if (!customerRes.ok) {
             throw new Error(`Failed to fetch customer id: ${params.slug}`);
           }
-
-          const customer = await res.json();
+          const customer = await customerRes.json();
           setCustomerInfo(customer);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
 
-      fetchCustomer();
-    }
-  }, [params.slug]);
-
-  // Pull All Projects by Slug ID
-  useEffect(() => {
-    if (params.slug) {
-      const fetchProjects = async () => {
-        try {
-          const res = await fetch(
+          // Fetch projects for the customer
+          const projectsRes = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/projects/customer/${params.slug}`,
             {
               cache: "no-store",
             }
           );
-          if (!res.ok) {
+          if (!projectsRes.ok) {
             throw new Error(
               `Failed to fetch projects for customer id: ${params.slug}`
             );
           }
-
-          const allProjects = await res.json();
+          const allProjects = await projectsRes.json();
           setProjects(allProjects);
+
+          // Set dataFetched to true once both fetch operations are complete
+          setDataFetched(true);
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
           setLoading(false);
         }
-      };
+      }
+    };
 
-      fetchProjects();
-    }
+    fetchCustomerAndProjects();
   }, [params.slug]);
 
-  // Wait for DOM to load, then Attach the event listener for Accordion items.
-  // TODO: Fix Toggle Action
+  // Initialize HSAccordion for accordion elements
   useEffect(() => {
-    const accordionElements =
-      document.querySelectorAll<HTMLElement>(".hs-accordion");
-    accordionElements.forEach((element) => {
-      const accordion = new HSAccordion(element);
-      const showBtn = element.querySelector<HTMLElement>(
-        ".hs-accordion-toggle"
-      );
+    if (dataFetched) {
+      const accordionElements =
+        document.querySelectorAll<HTMLElement>(".hs-accordion");
+      accordionElements.forEach((element) => {
+        const accordion = new HSAccordion(element);
+        const showBtn = element.querySelector<HTMLElement>(
+          ".hs-accordion-toggle"
+        );
 
-      showBtn?.addEventListener("click", () => {
-        accordion.show();
-        // accordion.hide();
+        showBtn?.addEventListener("click", () => {
+          accordion.show();
+          // accordion.hide();
+        });
       });
-    });
-  }, [projects]);
+    }
+  }, [dataFetched]);
 
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;
