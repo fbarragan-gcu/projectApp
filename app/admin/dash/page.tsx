@@ -31,11 +31,11 @@ export default function Dash() {
   return (
     <>
       <p>Admin Dashboard</p>
-      <p>Admin ID: {user?.id}</p>
       <p>
         Welcome: {user?.user_metadata.first_name}{" "}
         {user?.user_metadata.last_name}
       </p>
+      <p>Admin ID: {user?.id}</p>
       <p>Email: {user?.email}</p>
       <p>
         Account Created:{" "}
