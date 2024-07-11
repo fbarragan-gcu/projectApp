@@ -1,10 +1,14 @@
 "use client";
 import { Customer, Project } from "@/app/lib/definitions";
 import Modal from "@/app/ui/modal/modal1";
+import { User } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { HSOverlay } from "preline/preline";
 import { useEffect, useState } from "react";
+import { getUser } from "@/utils/supabase/queries";
+
+const supabase = createClient();
 
 // Display Project by Id
 // projects/display-project/:id
@@ -13,8 +17,13 @@ export default function DisplayProject({
 }: {
   params: { slug: string };
 }) {
+  // State for Customer Info
   const [customerInfo, setCustomerInfo] = useState<Customer | null>(null);
+  // State for Project Info
   const [project, setProjects] = useState<Project>();
+  // State for User info
+  const [user, setUser] = useState<User | null>(null);
+  // State for loading info
   const [loading, setLoading] = useState(true);
   // React State VARS for Modal
   const [modalStatus, setModalStatus] = useState({
@@ -72,7 +81,8 @@ export default function DisplayProject({
           setLoading(false);
         }
       };
-
+      // Admin ID
+      getUser(supabase).then(setUser).catch(console.error);
       getProjectAndCustomer();
     }
   }, [params.slug]);
@@ -250,19 +260,25 @@ export default function DisplayProject({
             <Link href={`../create-pdf/${project.project_id}`}>Create PDF</Link>
           </button>
         </div>
-        <div className="text-right">
-          <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300">
-            <Link href={`../edit/${project.project_id}`}>Edit</Link>
-          </button>
-        </div>
-        <div className="text-left">
-          <button
-            onClick={handleDelete}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
-          >
-            Delete
-          </button>
-        </div>
+        {/* Only Allow Edit/Delete if Project Owner */}
+        {user?.id === customerInfo?.admin_id ? (
+          <>
+            {" "}
+            <div className="text-right">
+              <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300">
+                <Link href={`../edit/${project.project_id}`}>Edit</Link>
+              </button>
+            </div>
+            <div className="text-left">
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
+              >
+                Delete
+              </button>
+            </div>
+          </>
+        ) : null}
       </div>
 
       <div className="flex justify-center mt-4">

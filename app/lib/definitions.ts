@@ -21,12 +21,12 @@ export type User = {
     password_confirm: string;
 }
 
+// TODO: ADD Admin Count
 // Application Stats for Main page
 export type AppStats = {
     number_of_customers: number;
     number_of_projects: number;
     project_total: number;
-    number_of_admins: number;
 }
 
 // Customer Type

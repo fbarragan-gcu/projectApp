@@ -114,39 +114,40 @@ export async function getProjectsByCustomerId(id:string): Promise<Project[] | nu
 }
 
 // Get All Projects by Admin Id
-export async function getProjectsByAdminId(id:string): Promise<Project[] | null> {
-    try{
-        const result = await sql<Project>`
-            SELECT 
-                project.project_id, 
-                project.customer_id, 
-                project.address_one, 
-                project.address_two, 
-                project.city, 
-                project.state, 
-                project.zip_code, 
-                project.scope_of_work, 
-                project.special_request, 
-                project.quoted_price, 
-                project.image_id, 
-                project.created_at, 
-                project.modified_at
-            FROM 
-                project
-            INNER JOIN 
-                customer 
-            ON 
-                project.customer_id = customer.customer_id
-            WHERE 
-                customer.admin_id = ${id};
-        `
-        const projects = result.rows;
-        return projects || null;
-    } catch (err) {
-        console.log("Database Error: ", err);
-        throw new Error("Failed to fetch Projects by Admin id");
-    }
-}
+// TODO: Convert to Supabase
+// export async function getProjectsByAdminId(id:string): Promise<Project[] | null> {
+//     try{
+//         const result = await sql<Project>`
+//             SELECT 
+//                 project.project_id, 
+//                 project.customer_id, 
+//                 project.address_one, 
+//                 project.address_two, 
+//                 project.city, 
+//                 project.state, 
+//                 project.zip_code, 
+//                 project.scope_of_work, 
+//                 project.special_request, 
+//                 project.quoted_price, 
+//                 project.image_id, 
+//                 project.created_at, 
+//                 project.modified_at
+//             FROM 
+//                 project
+//             INNER JOIN 
+//                 customer 
+//             ON 
+//                 project.customer_id = customer.customer_id
+//             WHERE 
+//                 customer.admin_id = ${id};
+//         `
+//         const projects = result.rows;
+//         return projects || null;
+//     } catch (err) {
+//         console.log("Database Error: ", err);
+//         throw new Error("Failed to fetch Projects by Admin id");
+//     }
+// }
 
 // Create New Project
 export async function createProject(project: Project): Promise<Project[]>{
@@ -217,51 +218,49 @@ export async function deleteProject(projectId: string): Promise<Project | null> 
     }
 }
 
-
 /* Admin */
+// TODO: Convert to Supabase
 
 // Get All Admins
-export async function getAllAdmins(): Promise<Admin[]> {
-    try {
-        const result = await sql<Admin>`
-        SELECT admin_id, first_name, last_name, user_name, email
-        FROM admin
-        `;
-        const admins = result.rows;
-        return admins;
-    } catch (err) {
-        console.log("Database Error: ", err);
-        throw new Error("Failed to fetch admin data");
-    }
-}
+// export async function getAllAdmins(): Promise<Admin[]> {
+//     try {
+//         const result = await sql<Admin>`
+//         SELECT admin_id, first_name, last_name, user_name, email
+//         FROM admin
+//         `;
+//         const admins = result.rows;
+//         return admins;
+//     } catch (err) {
+//         console.log("Database Error: ", err);
+//         throw new Error("Failed to fetch admin data");
+//     }
+// }
 
-// Get Admin By ID
-export async function getAdminById(id:string): Promise<Admin | null> {
-    try {
-        const result = await sql<Admin>`
-        SELECT admin_id, first_name, last_name, user_name, email, password
-        FROM admin
-        WHERE admin_id = ${id}
-        `;
-        const admin = result.rows[0];
-        return admin;
-    } catch (err) {
-        console.log("Database Error: ", err);
-        throw new Error("Failed to fetch admin data");
-    }
-}
+// // Get Admin By ID
+// export async function getAdminById(id:string): Promise<Admin | null> {
+//     try {
+//         const result = await sql<Admin>`
+//         SELECT admin_id, first_name, last_name, user_name, email, password
+//         FROM admin
+//         WHERE admin_id = ${id}
+//         `;
+//         const admin = result.rows[0];
+//         return admin;
+//     } catch (err) {
+//         console.log("Database Error: ", err);
+//         throw new Error("Failed to fetch admin data");
+//     }
+// }
 
 export async function getAppStats(): Promise<AppStats> {
     try {
         const results = await sql<AppStats>`
-        SELECT
-        COUNT(DISTINCT c.customer_id) AS number_of_customers,
-        COUNT(p.project_id) AS number_of_projects,
-        COALESCE(SUM(p.quoted_price), 0) AS project_total,
-        COUNT(DISTINCT a.admin_id) AS number_of_admins
-        FROM customer c
-        LEFT JOIN project p ON c.customer_id = p.customer_id
-        LEFT JOIN admin a ON c.customer_id = a.admin_id;
+            SELECT
+                COUNT(DISTINCT c.customer_id) AS number_of_customers,
+                COUNT(p.project_id) AS number_of_projects,
+                COALESCE(SUM(p.quoted_price), 0) AS project_total
+            FROM customer c
+            LEFT JOIN project p ON c.customer_id = p.customer_id;
         `
         const stats = results.rows[0];
         return stats;
