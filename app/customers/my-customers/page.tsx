@@ -2,24 +2,41 @@
 import Link from "next/link";
 import { Customer } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { getUser } from "@/utils/supabase/queries";
+
+const supabase = createClient();
 
 // Page to Display All Customers and Information.
-export default function AllCustomers() {
+export default function MyCustomers() {
   // React State VARS
   const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  // State for Admin Id info
+  const [admin, setAdmin] = useState<string | null>(null);
   // Set Loading State
   const [loading, setLoading] = useState(true);
   // Set Customer Length
   const [numbCustomers, setNumbCustomers] = useState(null);
 
+  // Get Admin Id
+  useEffect(() => {
+    getUser(supabase)
+      .then((user) => setAdmin(user?.id || null))
+      .catch(console.error);
+  }, []);
+
   // Get All Customer data via API call
   // Fetch data on page reload
   useEffect(() => {
     // using NEXT_PUBLIC_API_URL since client side
-    async function fetchCustomers() {
+    async function fetchCustomersByAdminId() {
+      if (!admin) {
+        return;
+      }
+
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/customers`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/by-admin/${admin}`,
           {
             cache: "no-store",
           }
@@ -37,9 +54,10 @@ export default function AllCustomers() {
         setLoading(false);
       }
     }
-
-    fetchCustomers();
-  }, []);
+    if (admin) {
+      fetchCustomersByAdminId();
+    }
+  }, [admin]);
 
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;
@@ -53,12 +71,20 @@ export default function AllCustomers() {
             Create a New Customer
           </Link>
         </div>
+        <div className="flex justify-center items-center pt-4">
+          <Link
+            href="../customers/all-customers"
+            className="text-center text-blue-500"
+          >
+            Back to all customers
+          </Link>
+        </div>
       </div>
     );
 
   return (
     <>
-      <p>All Customers</p>
+      <p>Number of Customers{numbCustomers}</p>
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">

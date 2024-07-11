@@ -19,6 +19,23 @@ export async function getAllCustomers(): Promise<Customer[]> {
     }
 }
 
+// Get All Customers, Sort by customer_id
+export async function getAllCustomersByAdminId(id:string): Promise<Customer[]> {
+    try {
+        const result = await sql<Customer>`
+        SELECT customer_id, admin_id, first_name, last_name, address_one, address_two, state, zip_code, email_address, phone_number
+        FROM customer
+        WHERE admin_id = ${id}
+        ORDER BY customer_id
+        `;
+        const customers = result.rows;
+        return customers;
+    } catch (err) {
+        console.log("Database Error: ", err);
+        throw new Error("Failed to fetch customer data");
+    }
+}
+
 // Get Customer by customer_id
 export async function getCustomerById(id:string): Promise<Customer | null> {
     try {
