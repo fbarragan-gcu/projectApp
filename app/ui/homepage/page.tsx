@@ -4,6 +4,8 @@ import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import PrelineScript from "@/app/PrelineScript";
+import Link from "next/link";
 
 // Application landing page
 // export default function HomePage({ user }: Props) {
@@ -93,7 +95,8 @@ export default function HomePage() {
                 <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
                   Total Customers
                 </p>
-                <div className="hs-tooltip">
+                {/* TODO:Fix tooltip */}
+                {/* <div className="hs-tooltip">
                   <div className="hs-tooltip-toggle">
                     <svg
                       className="flex-shrink-0 size-4 text-gray-500 dark:text-neutral-500"
@@ -118,12 +121,14 @@ export default function HomePage() {
                       The number total customers
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="mt-1 flex items-center gap-x-2">
                 <h3 className="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                  {appStats?.number_of_customers}
+                  <Link href="/customers/all-customers">
+                    {appStats?.number_of_customers}
+                  </Link>
                 </h3>
                 {/* TODO: Implement Change */}
                 {/* <span className="flex items-center gap-x-1 text-green-600">
@@ -156,7 +161,8 @@ export default function HomePage() {
                 <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
                   Number of Projects
                 </p>
-                <div className="hs-tooltip">
+                {/* TODO:Fix tooltip */}
+                {/* <div className="hs-tooltip">
                   <div className="hs-tooltip-toggle">
                     <svg
                       className="flex-shrink-0 size-4 text-gray-500 dark:text-neutral-500"
@@ -181,12 +187,14 @@ export default function HomePage() {
                       Total active projects
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="mt-1 flex items-center gap-x-2">
                 <h3 className="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                  {appStats?.number_of_projects}
+                  <Link href="/projects/all-projects/">
+                    {appStats?.number_of_projects}
+                  </Link>
                 </h3>
               </div>
             </div>
