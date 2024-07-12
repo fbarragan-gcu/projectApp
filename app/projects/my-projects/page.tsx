@@ -1,16 +1,39 @@
 "use client";
-import { Project, ProjectFull, Customer } from "@/app/lib/definitions";
 import Link from "next/link";
+import { Project, ProjectFull, Customer } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { getUser } from "@/utils/supabase/queries";
 
-// Display All Project Data
+const supabase = createClient();
+
+// TODO: Implement Projects per admin only
+// Display All Current Admins Project Data
 export default function MyProjects() {
   // React State VARS
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  // Set Loading State
+  const [loading, setLoading] = useState(true);
+  // State for Admin Id info
+  const [admin, setAdmin] = useState<string | null>(null);
+  // Set Project Length
+  const [numbProjects, setNumbProjects] = useState(null);
+
+  // Get Admin Id
+  useEffect(() => {
+    getUser(supabase)
+      .then((user) => setAdmin(user?.id || null))
+      .catch(console.error);
+  }, []);
+
   // Get All Customers and Project data via API calls
   // Fetch data on page reload
   useEffect(() => {
+    if (!admin) {
+      return;
+    }
+
     // using NEXT_PUBLIC_API_URL since call is client side
     async function getAllCustomers() {
       try {
@@ -31,10 +54,10 @@ export default function MyProjects() {
       }
     }
 
-    async function getAllProjects() {
+    async function getAllProjectsByAdminId() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/projects`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/projects/by-admin/${admin}`,
           {
             cache: "no-store",
           }
@@ -45,15 +68,20 @@ export default function MyProjects() {
 
         const data = await res.json();
         setAllProjects(data);
+        setNumbProjects(data.length);
       } catch (error) {
         console.log("Error fetching projects: ", error);
+      } finally {
+        setLoading(false);
       }
     }
 
-    // Fetch all data.
-    getAllCustomers();
-    getAllProjects();
-  }, []);
+    // Fetch all data only if Admin present.
+    if (admin) {
+      getAllCustomers();
+      getAllProjectsByAdminId();
+    }
+  }, [admin]);
 
   const createProfile = (allProjects: Project, allCustomers: Customer) => {
     if (allProjects.customer_id === allCustomers.customer_id) {
@@ -72,9 +100,32 @@ export default function MyProjects() {
     (profile: ProjectFull | null) => profile !== null
   );
 
+  // Display loading while pulling data
+  if (loading) return <div>Loading...</div>;
+  // Display no Projects
+  if (numbProjects === 0)
+    return (
+      <div>
+        No Projects Yet
+        <div className="flex justify-center items-center pt-4">
+          <Link href="../projects/new" className="text-center text-blue-500">
+            Create a New Project
+          </Link>
+        </div>
+        <div className="flex justify-center items-center pt-4">
+          <Link
+            href="../projects/all-projects"
+            className="text-center text-blue-500"
+          >
+            Back to all projects
+          </Link>
+        </div>
+      </div>
+    );
+
   return (
     <>
-      <p>All Projects</p>
+      <h1>Number of my Projects: {numbProjects}</h1>
 
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">

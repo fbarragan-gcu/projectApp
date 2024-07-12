@@ -132,39 +132,21 @@ export async function getProjectsByCustomerId(id:string): Promise<Project[] | nu
 
 // Get All Projects by Admin Id
 // TODO: Convert to Supabase
-// export async function getProjectsByAdminId(id:string): Promise<Project[] | null> {
-//     try{
-//         const result = await sql<Project>`
-//             SELECT 
-//                 project.project_id, 
-//                 project.customer_id, 
-//                 project.address_one, 
-//                 project.address_two, 
-//                 project.city, 
-//                 project.state, 
-//                 project.zip_code, 
-//                 project.scope_of_work, 
-//                 project.special_request, 
-//                 project.quoted_price, 
-//                 project.image_id, 
-//                 project.created_at, 
-//                 project.modified_at
-//             FROM 
-//                 project
-//             INNER JOIN 
-//                 customer 
-//             ON 
-//                 project.customer_id = customer.customer_id
-//             WHERE 
-//                 customer.admin_id = ${id};
-//         `
-//         const projects = result.rows;
-//         return projects || null;
-//     } catch (err) {
-//         console.log("Database Error: ", err);
-//         throw new Error("Failed to fetch Projects by Admin id");
-//     }
-// }
+export async function getAllProjectsByAdminId(id:string): Promise<Project[] | null> {
+    try{
+        const result = await sql<Project>`
+        SELECT c.customer_id, c.admin_id, c.first_name, c.last_name, p.project_id, p.city, p.scope_of_work
+        FROM customer c
+        JOIN project p on c.customer_id = p.customer_id
+        WHERE c.admin_id = ${id};
+        `
+        const projects = result.rows;
+        return projects || null;
+    } catch (err) {
+        console.log("Database Error: ", err);
+        throw new Error("Failed to fetch Projects by Admin id");
+    }
+}
 
 // Create New Project
 export async function createProject(project: Project): Promise<Project[]>{

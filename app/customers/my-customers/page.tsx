@@ -7,7 +7,7 @@ import { getUser } from "@/utils/supabase/queries";
 
 const supabase = createClient();
 
-// Page to Display All Customers and Information.
+// Page to Display All Current Admins Customers and Information.
 export default function MyCustomers() {
   // React State VARS
   const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
@@ -28,12 +28,12 @@ export default function MyCustomers() {
   // Get All Customer data via API call
   // Fetch data on page reload
   useEffect(() => {
-    // using NEXT_PUBLIC_API_URL since client side
     async function fetchCustomersByAdminId() {
       if (!admin) {
         return;
       }
 
+      // using NEXT_PUBLIC_API_URL since client side
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/customers/by-admin/${admin}`,
@@ -84,7 +84,7 @@ export default function MyCustomers() {
 
   return (
     <>
-      <p>Number of Customers{numbCustomers}</p>
+      <h1>Number of my Customers: {numbCustomers}</h1>
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">

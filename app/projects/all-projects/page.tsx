@@ -8,6 +8,11 @@ export default function AllProjects() {
   // React State VARS
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  // Set Loading State
+  const [loading, setLoading] = useState(true);
+  // Set Project Number
+  const [numbProjects, setNumbProjects] = useState(null);
+
   // Get All Customers and Project data via API calls
   // Fetch data on page reload
   useEffect(() => {
@@ -45,8 +50,11 @@ export default function AllProjects() {
 
         const data = await res.json();
         setAllProjects(data);
+        setNumbProjects(data.length);
       } catch (error) {
         console.log("Error fetching projects: ", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -72,10 +80,24 @@ export default function AllProjects() {
     (profile: ProjectFull | null) => profile !== null
   );
 
+  // Display loading while pulling data
+  if (loading) return <div>Loading...</div>;
+  // Display Project not found if error with Project ID
+  if (numbProjects === 0)
+    return (
+      <div>
+        No Projects Yet
+        <div className="flex justify-center items-center pt-4">
+          <Link href="../projects/new" className="text-center text-blue-500">
+            Create a New Project
+          </Link>
+        </div>
+      </div>
+    );
+
   return (
     <>
       <p>All Projects</p>
-
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
