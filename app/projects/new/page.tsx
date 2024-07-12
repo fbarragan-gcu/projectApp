@@ -2,23 +2,44 @@
 import { Project, Customer } from "@/app/lib/definitions";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Modal from "@/app/ui/modal/modal";
-import { HSOverlay } from "preline/preline";
 import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { getUser } from "@/utils/supabase/queries";
+import Link from "next/link";
+
+const supabase = createClient();
 
 // Create New Project Page
 export default function New() {
   // React State VARS
   const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  const [admin, setAdmin] = useState<string | null>(null);
+  // Set Loading State
+  const [loading, setLoading] = useState(true);
+  // Set Project Length
+  const [numbCustomers, setNumbCustomers] = useState(null);
   // for redirect
   const router = useRouter();
 
+  // Get Admin Id
   useEffect(() => {
+    getUser(supabase)
+      .then((user) => setAdmin(user?.id || null))
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (!admin) {
+      return;
+    }
+
     // using NEXT_PUBLIC_API_URL since client side
     async function fetchCustomers() {
       try {
+        // Fetch only Customers belonging to Admin
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/customers`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/by-admin/${admin}`,
           {
             cache: "no-store",
           }
@@ -29,13 +50,18 @@ export default function New() {
 
         const data = await res.json();
         setAllCustomers(data);
+        setNumbCustomers(data.length);
       } catch (error) {
         console.error("Error fetching customers:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchCustomers();
-  }, []);
+    if (admin) {
+      fetchCustomers();
+    }
+  }, [admin]);
 
   // React State VARS for Modal
   const [modalStatus, setModalStatus] = useState({
@@ -115,6 +141,30 @@ export default function New() {
       }
     }
   };
+
+  // Display loading while pulling data
+  if (loading) return <div>Loading...</div>;
+  // Display Project not found if error with Project ID
+  if (numbCustomers === 0)
+    return (
+      <div>
+        No Customers Yet, To create a new Project you must create a Customer
+        record first.
+        <div className="flex justify-center items-center pt-4">
+          <Link href="../customers/new" className="text-center text-blue-500">
+            Create a New Customer
+          </Link>
+        </div>
+        <div className="flex justify-center items-center pt-4">
+          <Link
+            href="../customers/all-customers"
+            className="text-center text-blue-500"
+          >
+            Back to all customers
+          </Link>
+        </div>
+      </div>
+    );
 
   return (
     <>

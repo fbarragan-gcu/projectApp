@@ -117,15 +117,12 @@ export default function New() {
     <>
       <p>Create a New Customer</p>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <form> */}
-        {/* Hardcode Admin ID until login works */}
         <input
           type="hidden"
           className="form-control"
           id="admin_id"
           readOnly
           value={admin?.id}
-          // {...register("admin_id", { valueAsNumber: true })}
           {...register("admin_id")}
         />
         <div className="flex flex-wrap">
