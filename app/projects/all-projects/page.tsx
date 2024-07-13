@@ -20,7 +20,7 @@ export default function AllProjects() {
     async function getAllCustomers() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/`,
+          `${process.env.NEXT_PUBLIC_API_URL}api/customers/`,
           {
             cache: "no-store",
           }
@@ -39,7 +39,7 @@ export default function AllProjects() {
     async function getAllProjects() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/projects`,
+          `${process.env.NEXT_PUBLIC_API_URL}api/projects`,
           {
             cache: "no-store",
           }

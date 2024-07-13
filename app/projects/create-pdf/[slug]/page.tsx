@@ -25,7 +25,7 @@ export default function CreatePDF({ params }: { params: { slug: string } }) {
       const getProjectAndCustomer = async () => {
         try {
           const projectRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/projects/${params.slug}`,
+            `${process.env.NEXT_PUBLIC_API_URL}api/projects/${params.slug}`,
             { cache: "no-store" }
           );
           if (!projectRes.ok) {
@@ -35,7 +35,7 @@ export default function CreatePDF({ params }: { params: { slug: string } }) {
           setProjects(project);
 
           const customerRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/customers/${project.customer_id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}api/customers/${project.customer_id}`,
             { cache: "no-store" }
           );
           if (!customerRes.ok) {

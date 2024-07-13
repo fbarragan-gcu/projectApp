@@ -19,7 +19,7 @@ export default function AllCustomers() {
     async function fetchCustomers() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/customers`,
+          `${process.env.NEXT_PUBLIC_API_URL}api/customers`,
           {
             cache: "no-store",
           }

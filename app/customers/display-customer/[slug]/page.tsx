@@ -24,7 +24,7 @@ export default function DisplayCustomer({
         try {
           // Fetch customer information
           const customerRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/customers/${params.slug}`,
+            `${process.env.NEXT_PUBLIC_API_URL}api/customers/${params.slug}`,
             {
               cache: "no-store",
             }
@@ -37,7 +37,7 @@ export default function DisplayCustomer({
 
           // Fetch projects for the customer
           const projectsRes = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/projects/customer/${params.slug}`,
+            `${process.env.NEXT_PUBLIC_API_URL}api/projects/customer/${params.slug}`,
             {
               cache: "no-store",
             }
