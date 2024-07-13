@@ -35,16 +35,16 @@ export default function MyProjects() {
     }
 
     // using NEXT_PUBLIC_API_URL since call is client side
-    async function getAllCustomers() {
+    async function fetchCustomersByAdminId() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/by-admin/${admin}`,
           {
             cache: "no-store",
           }
         );
         if (!res.ok) {
-          throw new Error("Faile to fetch customer data.");
+          throw new Error("Failed to fetch data");
         }
 
         const data = await res.json();
@@ -78,8 +78,8 @@ export default function MyProjects() {
 
     // Fetch all data only if Admin present.
     if (admin) {
-      getAllCustomers();
       getAllProjectsByAdminId();
+      fetchCustomersByAdminId();
     }
   }, [admin]);
 
