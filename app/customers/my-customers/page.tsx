@@ -40,7 +40,7 @@ export default function MyCustomers() {
       // using NEXT_PUBLIC_API_URL since client side
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/by-admin/${admin}`,
+          `${process.env.NEXT_PUBLIC_API_URL}api/customers/by-admin/${admin}`,
           {
             cache: "no-store",
           }
