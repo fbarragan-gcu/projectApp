@@ -4,6 +4,7 @@ import { Customer } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { getUser } from "@/utils/supabase/queries";
+import { usePathname } from "next/navigation";
 
 const supabase = createClient();
 
@@ -17,6 +18,9 @@ export default function MyCustomers() {
   const [loading, setLoading] = useState(true);
   // Set Customer Length
   const [numbCustomers, setNumbCustomers] = useState(null);
+  // Used to Refresh state
+  const pathname = usePathname();
+  // const router = useRouter();
 
   // Get Admin Id
   useEffect(() => {
@@ -57,7 +61,7 @@ export default function MyCustomers() {
     if (admin) {
       fetchCustomersByAdminId();
     }
-  }, [admin]);
+  }, [admin, pathname]);
 
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;

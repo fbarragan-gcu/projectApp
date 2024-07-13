@@ -4,6 +4,7 @@ import { Project, ProjectFull, Customer } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { getUser } from "@/utils/supabase/queries";
+import { usePathname } from "next/navigation";
 
 const supabase = createClient();
 
@@ -19,6 +20,8 @@ export default function MyProjects() {
   const [admin, setAdmin] = useState<string | null>(null);
   // Set Project Length
   const [numbProjects, setNumbProjects] = useState(null);
+  // Used to Refresh state
+  const pathname = usePathname();
 
   // Get Admin Id
   useEffect(() => {
@@ -81,7 +84,7 @@ export default function MyProjects() {
       getAllProjectsByAdminId();
       fetchCustomersByAdminId();
     }
-  }, [admin]);
+  }, [admin, pathname]);
 
   const createProfile = (allProjects: Project, allCustomers: Customer) => {
     if (allProjects.customer_id === allCustomers.customer_id) {
