@@ -85,7 +85,6 @@ export default function New() {
         body: JSON.stringify(data),
       });
       modalBtn?.click();
-      console.log("Customer Created:", data);
     } catch (error) {
       // API Errors
       setModalStatus({

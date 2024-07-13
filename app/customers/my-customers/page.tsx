@@ -20,16 +20,13 @@ export default function MyCustomers() {
   const [numbCustomers, setNumbCustomers] = useState(null);
   // Used to Refresh state
   const pathname = usePathname();
-  // const router = useRouter();
 
-  console.log(`pathname before 1st uE: ${pathname}`);
   // Get Admin Id
   useEffect(() => {
     getUser(supabase)
       .then((user) => setAdmin(user?.id || null))
       .catch(console.error);
   }, []);
-  console.log(`pathname after 1st uE: ${pathname}`);
 
   // Get All Customer data via API call
   // Fetch data on page reload
@@ -62,11 +59,9 @@ export default function MyCustomers() {
     }
     if (admin) {
       fetchCustomersByAdminId();
-      console.log(`pathname 2nd uE after fetch: ${pathname}`);
     }
   }, [admin, pathname]);
 
-  console.log(`pathname 2nd end uE: ${pathname}`);
   // Display loading while pulling data
   if (loading) return <div>Loading...</div>;
   // Display Project not found if error with Project ID
