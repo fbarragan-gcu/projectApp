@@ -1,7 +1,7 @@
 "use client";
 import { Project, Customer } from "@/app/lib/definitions";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Modal from "@/app/ui/modal/modal";
+import Modal from "@/app/ui/modal/modal1";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,20 @@ export default function New() {
   const [loading, setLoading] = useState(true);
   // Set Project Length
   const [numbCustomers, setNumbCustomers] = useState(null);
+  // React State VARS for Modal
+  const [modalStatus, setModalStatus] = useState({
+    title: "",
+    status: "",
+    css: "",
+  });
+  // Open/Close Modal State
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Open/Close Modal Function
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
   // for redirect
   const router = useRouter();
 
@@ -63,12 +77,6 @@ export default function New() {
     }
   }, [admin]);
 
-  // React State VARS for Modal
-  const [modalStatus, setModalStatus] = useState({
-    title: "",
-    status: "",
-    css: "",
-  });
   // react-hook-form VARS
   const {
     register,
@@ -415,7 +423,10 @@ export default function New() {
             {/* Modal Component with Props passed in */}
             <Modal
               modalStatus={modalStatus}
-              handleButtonClick={handleButtonClick}
+              handleOkClick={handleButtonClick}
+              isOpen={isOpen}
+              toggleModal={toggleModal}
+              showCancelButton={false}
             />
           </div>
         </div>

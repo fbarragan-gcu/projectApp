@@ -2,6 +2,7 @@
 
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
+import PrelineScript from "@/app/PrelineScript";
 
 interface Props {
   user: User | null | undefined;

@@ -3,8 +3,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Customer } from "@/app/lib/definitions";
 import { User } from "@supabase/supabase-js";
-import Modal from "@/app/ui/modal/modal";
-import { HSOverlay } from "preline/preline";
+import Modal from "@/app/ui/modal/modal1";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/supabase/queries";
@@ -27,6 +26,14 @@ export default function New() {
     status: "",
     css: "",
   });
+  // Open/Close Modal State
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Open/Close Modal Function
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
   // for redirect
   const router = useRouter();
   // react-hook-form VARS
@@ -422,7 +429,10 @@ export default function New() {
             {/* Modal Component with Props passed in */}
             <Modal
               modalStatus={modalStatus}
-              handleButtonClick={handleButtonClick}
+              handleOkClick={handleButtonClick}
+              isOpen={isOpen}
+              toggleModal={toggleModal}
+              showCancelButton={false}
             />
           </div>
         </div>
