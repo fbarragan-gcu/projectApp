@@ -56,7 +56,6 @@ export default function New() {
       ...data,
       admin_id: admin?.id ?? "", // Append admin_id from admin state
     };
-    console.log(data1);
     // Modal and REST API call
     createCustomers(data1);
   };

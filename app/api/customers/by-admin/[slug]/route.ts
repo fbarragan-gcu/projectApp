@@ -9,8 +9,6 @@ export async function GET(
 ) {
   const slug = params.slug
   try {
-    console.log(`from slug ${slug}`)
-    console.log(typeof(slug))
     const customers = await getAllCustomersByAdminId(slug);
     if(!customers) {
       return NextResponse.json({error: `No Customers for Admin ID:${slug} found.`}, { status: 404});
