@@ -26,6 +26,7 @@ export default function MyCustomers() {
     getUser(supabase)
       .then((user) => setAdmin(user?.id || null))
       .catch(console.error);
+    console.log("getUser Executed");
   }, []);
 
   // Get All Customer data via API call
@@ -33,11 +34,13 @@ export default function MyCustomers() {
   useEffect(() => {
     async function fetchCustomersByAdminId() {
       if (!admin) {
+        console.log("no admin");
         return;
       }
 
       // using NEXT_PUBLIC_API_URL since client side
       try {
+        console.log("admin found, trying fetch");
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}api/customers/by-admin/${admin}`,
           {
@@ -51,13 +54,16 @@ export default function MyCustomers() {
         const data = await res.json();
         setAllCustomers(data);
         setNumbCustomers(data.length);
+        console.log("admin found, data set");
       } catch (error) {
         console.error("Error fetching customers:", error);
       } finally {
         setLoading(false);
+        console.log("admin found, setLoading = false");
       }
     }
     if (admin) {
+      console.log("admin found, executing async fetchCustomersByAdminId()");
       fetchCustomersByAdminId();
     }
   }, [admin, pathname]);
